@@ -76,7 +76,10 @@ jobs:
     name: Merge
     needs: test
     runs-on: ubuntu-latest
-    if: startsWith(github.head_ref, 'changeset-release')
+    if: startsWith(github.head_ref, 'changeset-release') || github.event.pull_request.user.login == 'dependabot[bot]'
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Merge pull request
         run: gh pr merge --auto --squash "$PR_URL" --delete-branch
