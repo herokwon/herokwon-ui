@@ -16,6 +16,10 @@ jobs:
     permissions:
       id-token: write
       contents: write
+    outputs:
+      published: ${{ steps.changesets.outputs.published }}
+      published_packages: ${{ steps.form.outputs.published_packages }}
+      pr: ${{ steps.pr.outputs.result }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -55,3 +59,139 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Form published packages into string
+        id: form
+        run: |
+          array='${{ steps.changesets.outputs.publishedPackages }}'
+          result=""
+
+          if [ "$array" != "[]" ]; then
+            for data in $(echo "$array" | jq -c '.[]'); do
+              name=$(echo "$data" | jq -r '.name')
+              version=$(echo "$data" | jq -r '.version')
+              result+="*\`$name\`* : <https://npmjs.com/package/$name/v/$version|*$version*>\n"
+            done
+          fi
+
+          result=${result%\\n}
+          echo "published_packages=$result" >> $GITHUB_OUTPUT
+
+      - name: Checkout pull request
+        id: pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const result = (await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              commit_sha: context.sha,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })).data[0];
+
+            return {
+              commit: result.merge_commit_sha.substring(0, 7),
+              number: result.number,
+              title: result.title,
+              url: result.html_url,
+              avatar_url: context.payload.repository.owner.avatar_url
+            };
+
+  send_slack_message:
+    needs: run-changesets
+    name: Send slack message
+    if: needs.run-changesets.outputs.published == 'true' || needs.run-changesets.outputs.published_packages != '' || failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send message on success
+        if: needs.run-changesets.outputs.published == 'true' && needs.run-changesets.outputs.published_packages != '' && success()
+        uses: slackapi/slack-github-action@v2
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
+            attachments:
+              - color: "#36a64f"
+                blocks:
+                  - type: "header"
+                    text:
+                      type: "plain_text"
+                      text: "✅ 패키지 배포 완료"
+                      emoji: true
+                  - type: "section"
+                    text:
+                      type: "mrkdwn"
+                      text: "${{ needs.run-changesets.outputs.published_packages }}"
+                  - type: "divider"
+                  - type: "section"
+                    text:
+                      type: "mrkdwn"
+                      text: "*Commit*\n<https://github.com/${{ github.repository }}/commit/${{ fromJSON(needs.run-changesets.outputs.pr).commit }}|${{ fromJSON(needs.run-changesets.outputs.pr).commit }}>"
+                  - type: "section"
+                    text:
+                      type: "mrkdwn"
+                      text: "*Pull request*\n<https://github.com/${{ github.repository }}/pull/${{ fromJSON(needs.run-changesets.outputs.pr).number }}|[#${{ fromJSON(needs.run-changesets.outputs.pr).number }}] ${{ fromJSON(needs.run-changesets.outputs.pr).title }}>"
+                  - type: "actions"
+                    elements:
+                      - type: "button"
+                        text:
+                          type: "plain_text"
+                          text: "⭐\t Workflow details"
+                          emoji: true
+                        url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                      - type: "button"
+                        text:
+                          type: "plain_text"
+                          text: "📄\t Release note"
+                          emoji: true
+                        url: "https://github.com/${{ github.repository }}/pull/${{ fromJSON(needs.run-changesets.outputs.pr).number }}"
+                  - type: "divider"
+                  - type: "context"
+                    elements:
+                      - type: "image"
+                        image_url: "${{ fromJSON(needs.run-changesets.outputs.pr).avatar_url }}"
+                        alt_text: "avatar_img"
+                      - type: "mrkdwn"
+                        text: "<https://github.com/${{ github.repository_owner }}|*${{ github.repository_owner }}*> has approved this message."
+
+      - name: Send message on failure
+        if: needs.run-changesets.outputs.published == 'false' && needs.run-changesets.outputs.published_packages == '' && failure()
+        uses: slackapi/slack-github-action@v2
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
+            attachments:
+              - color: "#ff0000"
+                blocks:
+                  - type: "header"
+                    text:
+                      type: "plain_text"
+                      text: "❌ 패키지 배포 실패"
+                      emoji: true
+                  - type: "divider"
+                  - type: "section"
+                    text:
+                      type: "mrkdwn"
+                      text: "*Commit*\n<https://github.com/${{ github.repository }}/commit/${{ fromJSON(needs.run-changesets.outputs.pr).commit }}|${{ fromJSON(needs.run-changesets.outputs.pr).commit }}>"
+                  - type: "section"
+                    text:
+                      type: "mrkdwn"
+                      text: "*Pull request*\n<https://github.com/${{ github.repository }}/pull/${{ fromJSON(needs.run-changesets.outputs.pr).number }}|[#${{ fromJSON(needs.run-changesets.outputs.pr).number }}] ${{ fromJSON(needs.run-changesets.outputs.pr).title }}>"
+                  - type: "actions"
+                    elements:
+                      - type: "button"
+                        text:
+                          type: "plain_text"
+                          text: "🔍\t Workflow details"
+                          emoji: true
+                        url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                  - type: "divider"
+                  - type: "context"
+                    elements:
+                      - type: "image"
+                        image_url: "${{ fromJSON(needs.run-changesets.outputs.pr).avatar_url }}"
+                        alt_text: "avatar_img"
+                      - type: "mrkdwn"
+                        text: "<https://github.com/${{ github.repository_owner }}|*${{ github.repository_owner }}*> has approved this message."
