@@ -1,5 +1,6 @@
 const js = require('@eslint/js');
 const eslintConfigPrettier = require('eslint-config-prettier');
+const jestdomPlugin = require('eslint-plugin-jest-dom');
 const onlyWarn = require('eslint-plugin-only-warn');
 const turboPlugin = require('eslint-plugin-turbo');
 const tseslint = require('typescript-eslint');
@@ -24,6 +25,17 @@ module.exports = [
   {
     plugins: {
       onlyWarn,
+    },
+  },
+  {
+    plugins: {
+      jestDom: jestdomPlugin,
+    },
+    rules: {
+      'jest-dom/prefer-checked': 'error',
+      'jest-dom/prefer-enabled-disabled': 'error',
+      'jest-dom/prefer-required': 'error',
+      'jest-dom/prefer-to-have-attribute': 'error',
     },
   },
   {
