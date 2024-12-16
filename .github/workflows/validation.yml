@@ -71,3 +71,15 @@ jobs:
 
       - name: Run test
         run: npm run test
+
+  merge:
+    name: Merge
+    needs: test
+    runs-on: ubuntu-latest
+    if: startsWith(github.head_ref, 'changeset-release')
+    steps:
+      - name: Merge pull request
+        run: gh pr merge --auto --squash "$PR_URL" --delete-branch
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
