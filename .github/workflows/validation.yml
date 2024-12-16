@@ -1,0 +1,68 @@
+name: Validation
+
+on: [pull_request]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-lint:
+    name: Check lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        id: cache
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ '**/package-lock.json' }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run format
+        run: npm run format
+
+  check-types:
+    name: Check types
+    needs: check-lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        id: cache
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ '**/package-lock.json' }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Run check-types
+        run: npm run check-types
