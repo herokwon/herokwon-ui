@@ -101,6 +101,9 @@ jobs:
 
       - name: Setup parameters
         id: params
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
           echo "{}" > body.json
           method="PATCH"
@@ -126,7 +129,7 @@ jobs:
               Title: {
                 title: [{
                   text: {
-                    content: "${{ github.event.issue.title }}"    
+                    content: "$ISSUE_TITLE"    
                   }
                 }]
               },
@@ -140,7 +143,7 @@ jobs:
                 date: ${{ steps.properties.outputs.date }}  
               },
               Link: {
-                url: "${{ github.event.issue.html_url }}"  
+                url: "$ISSUE_URL"  
               }  
             }
           }' body.json)
