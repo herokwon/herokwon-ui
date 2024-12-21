@@ -19,7 +19,8 @@ sh: cd packages/ui/<%= category %> && ncu -u && npm install
   },
   "scripts": {
     "build": "tsup",
-    "lint": "eslint . --max-warnings 0"
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "next": "^15",
