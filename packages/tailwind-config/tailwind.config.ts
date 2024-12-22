@@ -1,6 +1,6 @@
 import type { Config } from 'tailwindcss';
 
-import { tailwindExtendedTheme } from '../ui/config/src';
+import { tailwindExtendedTheme, tailwindPlugin } from '../ui/config/src';
 
 type RestrictedOmit<T, K extends keyof T> = {
   [key in keyof T as key extends K ? never : key]: T[key];
@@ -11,7 +11,7 @@ const config: RestrictedOmit<Config, 'content'> = {
   theme: {
     extend: tailwindExtendedTheme,
   },
-  plugins: [],
+  plugins: [tailwindPlugin],
 };
 
 export default config;
