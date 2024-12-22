@@ -32,10 +32,10 @@ module.exports = [
       jestDom: jestdomPlugin,
     },
     rules: {
-      'jest-dom/prefer-checked': 'error',
-      'jest-dom/prefer-enabled-disabled': 'error',
-      'jest-dom/prefer-required': 'error',
-      'jest-dom/prefer-to-have-attribute': 'error',
+      'jestDom/prefer-checked': 'error',
+      'jestDom/prefer-enabled-disabled': 'error',
+      'jestDom/prefer-required': 'error',
+      'jestDom/prefer-to-have-attribute': 'error',
     },
   },
   {

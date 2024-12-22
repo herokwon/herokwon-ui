@@ -1,0 +1,57 @@
+{
+  "name": "@herokwon/ui-config",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@repo/tailwind-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/eslint": "^9",
+    "eslint": "^9",
+    "tailwindcss": "^3.4.16",
+    "typescript": "^5.7.2"
+  },
+  "author": {
+    "name": "HeroKwon",
+    "email": "contact@herokwon.dev",
+    "url": "https://github.com/herokwon"
+  },
+  "bugs": {
+    "email": "contact@herokwon.dev",
+    "url": "https://github.com/herokwon/herokwon-ui/issues"
+  },
+  "contributors": [
+    {
+      "name": "HeroKwon",
+      "email": "contact@herokwon.dev",
+      "url": "https://github.com/herokwon"
+    }
+  ],
+  "keywords": [
+    "nextjs",
+    "tailwindcss",
+    "storybook",
+    "design-system"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/herokwon/herokwon-ui.git"
+  },
+  "description": "This is a config-package for simple design system by HeroKwon.",
+  "license": "MIT"
+}
