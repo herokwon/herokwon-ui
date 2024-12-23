@@ -1,7 +1,7 @@
 ---
 to: packages/ui/<%= category %>/src/<%= component %>.tsx
 ---
-import type { <%= category %>Props } from './types';
+import type { <%= h.inflection.capitalize(category) %>Props } from './types';
 
 type <%= component %>Props = <%= h.inflection.capitalize(category) %>Props;
 
