@@ -1,3 +1,5 @@
+import type { Globals } from 'csstype';
+
 const ELEMENT_SIZES = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 const ELEMENT_SPACINGS = [0, 2, 4, 6, 8, 10, 12, 16, 20] as const;
 const ELEMENT_STATUS = ['isDisabled', 'isSelected', 'isLoading'] as const;
@@ -21,6 +23,7 @@ export type PropsWithChildren<Props extends object = {}> = {
 export type PropsWithId<Props extends object = {}> = {
   id: string;
 } & Omit<Props, 'id'>;
+export type PropertyWithoutGlobals<P> = Exclude<P, Globals>;
 
 // Polymorphic
 type AsProp<T extends React.ElementType> = {
