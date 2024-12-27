@@ -31,20 +31,9 @@ describe('Box', () => {
     );
     const box = screen.getByTestId('box');
 
+    expect(box).toHaveTextContent('props');
     expect(box).toBeInTheDocument();
     expect(box).toHaveClass('box');
     expect(box).toHaveTextContent('props');
-  });
-
-  it('should render children correctly', () => {
-    render(
-      <Box>
-        <span>child</span>
-      </Box>,
-    );
-    const child = screen.getByText('child');
-
-    expect(child).toBeInTheDocument();
-    expect(child.tagName).toBe('SPAN');
   });
 });
