@@ -2,9 +2,9 @@ import type { Property } from 'csstype';
 
 import type {
   ElementSpacing,
+  OmitStrict,
   PolymorphicPropsWithoutRef,
   PropertyWithoutGlobals,
-  RestrictedOmit,
 } from './types';
 
 import Box from './Box';
@@ -35,7 +35,7 @@ export default function Flex<T extends React.ElementType = 'div'>({
   ...props
 }: FlexProps<T>) {
   const element = as || 'div';
-  const elemProps = props as RestrictedOmit<
+  const elemProps = props as OmitStrict<
     React.ComponentPropsWithoutRef<typeof element>,
     'children'
   >;
@@ -66,7 +66,7 @@ const FlexItem = <T extends React.ElementType = 'div'>({
   ...props
 }: FlexItemProps<T>) => {
   const element = as || 'div';
-  const elemProps = props as RestrictedOmit<
+  const elemProps = props as OmitStrict<
     React.ComponentPropsWithoutRef<typeof element>,
     'children'
   >;

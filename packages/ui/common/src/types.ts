@@ -13,7 +13,7 @@ export type ElementStatus = {
 };
 
 // Global
-export type RestrictedOmit<T, K extends keyof T> = {
+export type OmitStrict<T, K extends keyof T> = {
   [key in keyof T as key extends K ? never : key]: T[key];
 };
 export type Children = NonNullable<React.ReactNode>;
@@ -36,7 +36,7 @@ export type PolymorphicPropsWithoutRef<
   Props extends object = {},
 > = AsProp<T> &
   Props &
-  RestrictedOmit<React.ComponentPropsWithoutRef<T>, keyof (AsProp<T> & Props)>;
+  OmitStrict<React.ComponentPropsWithoutRef<T>, keyof (AsProp<T> & Props)>;
 export type PolymorphicPropsWithRef<
   T extends React.ElementType,
   Props extends object = {},
