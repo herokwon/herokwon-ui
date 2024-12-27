@@ -94,8 +94,9 @@ export default function Grid<T extends React.ElementType = 'div'>({
       as={element}
       className={`grid ${elemProps.className ?? ''}`}
       style={{
-        rowGap,
-        columnGap,
+        ...elemProps.style,
+        rowGap: `${rowGap * 0.25}rem`,
+        columnGap: `${columnGap * 0.25}rem`,
         gridAutoRows: auto.rows,
         gridAutoColumns: auto.cols,
         gridAutoFlow: auto.flow,
@@ -139,6 +140,7 @@ const GridItem = <T extends React.ElementType = 'div'>({
       {...elemProps}
       as={element}
       style={{
+        ...elemProps.style,
         order,
         gridRowStart: row.start,
         gridRowEnd: row.end,
