@@ -31,6 +31,7 @@ describe('Flex', () => {
     );
     const flex = screen.getByTestId('flex');
 
+    expect(flex).toHaveTextContent('props');
     expect(flex).toHaveStyle('flex-direction: column');
     expect(flex).toHaveStyle('flex-wrap: wrap');
     expect(flex).toHaveStyle('gap: 1rem');
@@ -70,6 +71,7 @@ describe('FlexItem', () => {
     );
     const flexItem = screen.getByTestId('flex-item');
 
+    expect(flexItem).toHaveTextContent('props');
     expect(flexItem).toHaveStyle('flex-basis: content');
     expect(flexItem).toHaveStyle('flex-grow: 1');
     expect(flexItem).toHaveStyle('flex-shrink: 2');
