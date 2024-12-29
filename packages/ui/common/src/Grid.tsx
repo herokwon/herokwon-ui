@@ -12,12 +12,10 @@ import Box from './Box';
 type GridProps<T extends React.ElementType> = PolymorphicPropsWithoutRef<
   T,
   {
-    gap?:
-      | ElementSpacing
-      | {
-          row?: ElementSpacing;
-          col?: ElementSpacing;
-        };
+    gap?: {
+      row?: ElementSpacing;
+      col?: ElementSpacing;
+    };
     auto?: {
       rows?: PropertyWithoutGlobals<Property.GridAutoRows>;
       cols?: PropertyWithoutGlobals<Property.GridAutoColumns>;
@@ -60,24 +58,11 @@ type GridItemProps<T extends React.ElementType> = PolymorphicPropsWithoutRef<
 export default function Grid<T extends React.ElementType = 'div'>({
   as,
   children,
-  gap = 0,
-  auto = {
-    rows: 'auto',
-    cols: 'auto',
-    flow: 'row',
-  },
-  template = {
-    rows: 'none',
-    cols: 'none',
-  },
-  justify = {
-    items: 'legacy',
-    content: 'normal',
-  },
-  align = {
-    items: 'normal',
-    content: 'normal',
-  },
+  gap,
+  auto,
+  template,
+  justify,
+  align,
   ...props
 }: GridProps<T>) {
   const element = as || 'div';
@@ -85,8 +70,6 @@ export default function Grid<T extends React.ElementType = 'div'>({
     React.ComponentPropsWithoutRef<typeof element>,
     'children'
   >;
-  const rowGap = typeof gap === 'number' ? gap : (gap.row ?? 0);
-  const columnGap = typeof gap === 'number' ? gap : (gap.col ?? 0);
 
   return (
     <Box
@@ -95,17 +78,17 @@ export default function Grid<T extends React.ElementType = 'div'>({
       className={`grid ${elemProps.className ?? ''}`}
       style={{
         ...elemProps.style,
-        rowGap: `${rowGap * 0.25}rem`,
-        columnGap: `${columnGap * 0.25}rem`,
-        gridAutoRows: auto.rows,
-        gridAutoColumns: auto.cols,
-        gridAutoFlow: auto.flow,
-        gridTemplateColumns: template.cols,
-        gridTemplateRows: template.rows,
-        justifyItems: justify.items,
-        justifyContent: justify.content,
-        alignItems: align.items,
-        alignContent: align.content,
+        rowGap: `${(gap?.row ?? 0) * 0.25}rem`,
+        columnGap: `${(gap?.col ?? 0) * 0.25}rem`,
+        gridAutoRows: auto?.rows ?? 'auto',
+        gridAutoColumns: auto?.cols ?? 'auto',
+        gridAutoFlow: auto?.flow ?? 'row',
+        gridTemplateColumns: template?.cols ?? 'none',
+        gridTemplateRows: template?.rows ?? 'none',
+        justifyItems: justify?.items ?? 'legacy',
+        justifyContent: justify?.content ?? 'normal',
+        alignItems: align?.items ?? 'normal',
+        alignContent: align?.content ?? 'normal',
       }}
     >
       {children}
@@ -117,14 +100,8 @@ const GridItem = <T extends React.ElementType = 'div'>({
   as,
   children,
   order = 0,
-  row = {
-    start: 'auto',
-    end: 'auto',
-  },
-  column = {
-    start: 'auto',
-    end: 'auto',
-  },
+  row,
+  column,
   justifySelf = 'auto',
   alignSelf = 'auto',
   ...props
@@ -142,10 +119,10 @@ const GridItem = <T extends React.ElementType = 'div'>({
       style={{
         ...elemProps.style,
         order,
-        gridRowStart: row.start,
-        gridRowEnd: row.end,
-        gridColumnStart: column.start,
-        gridColumnEnd: column.end,
+        gridRowStart: row?.start ?? 'auto',
+        gridRowEnd: row?.end ?? 'auto',
+        gridColumnStart: column?.start ?? 'auto',
+        gridColumnEnd: column?.end ?? 'auto',
         justifySelf,
         alignSelf,
       }}
