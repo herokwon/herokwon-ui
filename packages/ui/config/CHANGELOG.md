@@ -1,5 +1,11 @@
 # @herokwon/ui-config
 
+## 0.2.1
+
+### Patch Changes
+
+- ebed896: - [x] 타입 참조 & 타입명 변경 (_RestrictedOmit_ → **_OmitStrict_**)
+
 ## 0.2.0
 
 ### Minor Changes
