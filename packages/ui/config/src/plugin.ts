@@ -37,6 +37,9 @@ const tailwindPlugin = plugin(
     });
 
     addUtilities({
+      '.max-w-screen-xs': {
+        'max-width': '512px',
+      },
       '.scrollbar-x': scrollbarX,
       '.scrollbar-y': scrollbarY,
       '.hidden-scrollbar': hiddenScrollbar,
