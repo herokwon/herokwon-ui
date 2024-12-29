@@ -1,4 +1,4 @@
-import { baseInput } from '../../plugins';
+import { baseInput } from '../../plugins/input';
 
 describe('baseInput', () => {
   it('should have correct styles for input elements', () => {

@@ -1,17 +1,17 @@
 import plugin from 'tailwindcss/plugin';
 
+import { baseButton } from './plugins/button';
+import { baseCode } from './plugins/code';
+import { baseHeading } from './plugins/heading';
+import { baseInput } from './plugins/input';
+import { baseTable } from './plugins/table';
 import {
-  baseButton,
-  baseCode,
-  baseHeading,
-  baseInput,
-  baseTable,
   bgUnderline,
   customVariants,
   hiddenScrollbar,
   scrollbarX,
   scrollbarY,
-} from './plugins';
+} from './plugins/utils';
 
 const tailwindPlugin = plugin(
   ({ addBase, addVariant, addUtilities, matchVariant, matchUtilities }) => {
@@ -37,6 +37,9 @@ const tailwindPlugin = plugin(
     });
 
     addUtilities({
+      '.max-w-screen-xs': {
+        'max-width': '512px',
+      },
       '.scrollbar-x': scrollbarX,
       '.scrollbar-y': scrollbarY,
       '.hidden-scrollbar': hiddenScrollbar,

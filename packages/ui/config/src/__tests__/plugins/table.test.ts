@@ -1,4 +1,4 @@
-import { baseTable } from '../../plugins';
+import { baseTable } from '../../plugins/table';
 
 describe('baseTable', () => {
   it('should have correct styles for table', () => {

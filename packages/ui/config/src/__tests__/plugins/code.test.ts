@@ -1,4 +1,4 @@
-import { baseCode } from '../../plugins';
+import { baseCode } from '../../plugins/code';
 
 describe('baseCode', () => {
   it('should have correct styles for code and pre elements', () => {

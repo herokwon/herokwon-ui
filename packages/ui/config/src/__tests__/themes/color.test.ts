@@ -1,4 +1,4 @@
-import { extendedColors } from '../../themes';
+import { extendedColors } from '../../themes/color';
 
 describe('extendedColors', () => {
   it('should have brown colors', () => {

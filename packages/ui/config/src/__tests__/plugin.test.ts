@@ -4,9 +4,22 @@ import {
   hiddenScrollbar,
   scrollbarX,
   scrollbarY,
-} from '../plugins';
+} from '../plugins/utils';
 
 describe('tailwindPlugin', () => {
+  // it('should re-export all modules correctly', () => {
+  //   expect(plugins).toHaveProperty('baseButton');
+  //   expect(plugins).toHaveProperty('baseCode');
+  //   expect(plugins).toHaveProperty('baseHeading');
+  //   expect(plugins).toHaveProperty('baseInput');
+  //   expect(plugins).toHaveProperty('baseTable');
+  //   expect(plugins).toHaveProperty('customVariants');
+  //   expect(plugins).toHaveProperty('scrollbarX');
+  //   expect(plugins).toHaveProperty('scrollbarY');
+  //   expect(plugins).toHaveProperty('hiddenScrollbar');
+  //   expect(plugins).toHaveProperty('bgUnderline');
+  // });
+
   it('customVariants', () => {
     expect(customVariants).toStrictEqual({
       scrollbar: '&::-webkit-scrollbar',

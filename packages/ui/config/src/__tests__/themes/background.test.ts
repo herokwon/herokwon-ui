@@ -1,4 +1,4 @@
-import { extendedBgColors } from '../../themes';
+import { extendedBgColors } from '../../themes/background';
 
 describe('extendedBgColors', () => {
   it('should have default background colors', () => {
