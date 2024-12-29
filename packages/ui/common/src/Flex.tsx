@@ -43,7 +43,7 @@ export default function Flex<T extends React.ElementType = 'div'>({
   return (
     <Box
       {...elemProps}
-      as={element as React.ElementType}
+      as={element}
       className={`flex ${elemProps.className ?? ''}`}
       style={{
         ...elemProps.style,
@@ -74,7 +74,7 @@ const FlexItem = <T extends React.ElementType = 'div'>({
   return (
     <Box
       {...elemProps}
-      as={element as React.ElementType}
+      as={element}
       style={{
         ...elemProps.style,
         flexBasis,
