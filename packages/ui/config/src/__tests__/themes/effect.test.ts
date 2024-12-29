@@ -1,4 +1,4 @@
-import { extendedOpacity } from '../../themes';
+import { extendedOpacity } from '../../themes/effect';
 
 describe('extendedOpacity', () => {
   it('should have bold opacity value', () => {

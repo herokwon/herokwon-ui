@@ -1,4 +1,4 @@
-import { baseButton } from '../../plugins';
+import { baseButton } from '../../plugins/button';
 
 describe('baseButton', () => {
   it('should have correct styles for disabled button elements', () => {

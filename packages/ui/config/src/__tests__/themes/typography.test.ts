@@ -1,4 +1,4 @@
-import { extendedTextColors } from '../../themes';
+import { extendedTextColors } from '../../themes/typography';
 
 describe('extendedTextColors', () => {
   it('should have default text colors', () => {

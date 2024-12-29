@@ -1,4 +1,4 @@
-import { extendedHeight, extendedWidth } from '../../themes';
+import { extendedHeight, extendedWidth } from '../../themes/size';
 
 describe('extendedSizes', () => {
   it('should have size for 0px', () => {

@@ -1,4 +1,4 @@
-import { baseHeading } from '../../plugins';
+import { baseHeading } from '../../plugins/heading';
 
 describe('baseHeading', () => {
   it('should have correct styles for h1', () => {
