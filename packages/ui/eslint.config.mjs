@@ -16,6 +16,9 @@ const __dirname = path.dirname(__filename);
 export default [
   ...eslintConfig,
   {
+    rules: {
+      '@typescript-eslint/no-empty-object-type': 'off',
+    },
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 5,
