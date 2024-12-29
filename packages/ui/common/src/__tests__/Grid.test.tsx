@@ -9,6 +9,7 @@ describe('Grid', () => {
 
     expect(grid).toBeInTheDocument();
     expect(grid.tagName).toBe('DIV');
+    expect(grid).toHaveTextContent('default');
     expect(grid).toHaveClass('grid');
   });
 
@@ -18,6 +19,7 @@ describe('Grid', () => {
 
     expect(grid).toBeInTheDocument();
     expect(grid.tagName).toBe('SECTION');
+    expect(grid).toHaveTextContent('section');
   });
 
   it('should pass props to the element correctly', () => {
@@ -28,14 +30,34 @@ describe('Grid', () => {
           row: 8,
           col: 4,
         }}
+        auto={{
+          flow: 'row dense',
+        }}
+        template={{
+          rows: 'repeat(auto-fit, minmax(0, 200px))',
+        }}
+        justify={{
+          content: 'center',
+        }}
+        align={{
+          items: 'center',
+        }}
       >
         props
       </Grid>,
     );
     const grid = screen.getByTestId('grid');
 
-    expect(grid).toHaveStyle('row-gap: 2rem');
-    expect(grid).toHaveStyle('column-gap: 1rem');
+    expect(grid).toBeInTheDocument();
+    expect(grid).toHaveTextContent('props');
+    expect(grid).toHaveStyle({
+      'row-gap': '2rem',
+      'column-gap': '1rem',
+      'grid-auto-flow': 'row dense',
+      'grid-template-rows': 'repeat(auto-fit, minmax(0, 200px))',
+      'justify-content': 'center',
+      'align-items': 'center',
+    });
   });
 });
 
@@ -46,11 +68,14 @@ describe('GridItem', () => {
 
     expect(gridItem).toBeInTheDocument();
     expect(gridItem.tagName).toBe('DIV');
-    expect(gridItem).toHaveStyle('order: 0');
-    expect(gridItem).toHaveStyle('grid-row-start: auto');
-    expect(gridItem).toHaveStyle('grid-row-end: auto');
-    expect(gridItem).toHaveStyle('grid-column-start: auto');
-    expect(gridItem).toHaveStyle('grid-column-end: auto');
+    expect(gridItem).toHaveTextContent('default');
+    expect(gridItem).toHaveStyle({
+      order: '0',
+      'grid-row-start': 'auto',
+      'grid-row-end': 'auto',
+      'grid-column-start': 'auto',
+      'grid-column-end': 'auto',
+    });
   });
 
   it('should render as a different element', () => {
@@ -59,6 +84,7 @@ describe('GridItem', () => {
 
     expect(gridItem).toBeInTheDocument();
     expect(gridItem.tagName).toBe('SPAN');
+    expect(gridItem).toHaveTextContent('span');
   });
 
   it('should pass props to the element correctly', () => {
@@ -66,6 +92,14 @@ describe('GridItem', () => {
       <Grid.Item
         data-testid="grid-item"
         order={1}
+        row={{
+          start: 1,
+          end: 2,
+        }}
+        column={{
+          start: 2,
+          end: 'span 2',
+        }}
         justifySelf="center"
         alignSelf="center"
       >
@@ -74,9 +108,16 @@ describe('GridItem', () => {
     );
     const gridItem = screen.getByTestId('grid-item');
 
+    expect(gridItem).toBeInTheDocument();
     expect(gridItem).toHaveTextContent('props');
-    expect(gridItem).toHaveStyle('order: 1');
-    expect(gridItem).toHaveStyle('justify-self: center');
-    expect(gridItem).toHaveStyle('align-self: center');
+    expect(gridItem).toHaveStyle({
+      order: '1',
+      'grid-row-start': '1',
+      'grid-row-end': '2',
+      'grid-column-start': '2',
+      'grid-column-end': 'span 2',
+      'justify-self': 'center',
+      'align-self': 'center',
+    });
   });
 });

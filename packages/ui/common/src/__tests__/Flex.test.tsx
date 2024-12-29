@@ -9,10 +9,13 @@ describe('Flex', () => {
 
     expect(flex).toBeInTheDocument();
     expect(flex.tagName).toBe('DIV');
+    expect(flex).toHaveTextContent('default');
     expect(flex).toHaveClass('flex');
-    expect(flex).toHaveStyle('flex-direction: row');
-    expect(flex).toHaveStyle('flex-wrap: nowrap');
-    expect(flex).toHaveStyle('gap: 0rem');
+    expect(flex).toHaveStyle({
+      'flex-direction': 'row',
+      'flex-wrap': 'nowrap',
+      gap: '0rem',
+    });
   });
 
   it('should render as a different element', () => {
@@ -21,6 +24,7 @@ describe('Flex', () => {
 
     expect(flex).toBeInTheDocument();
     expect(flex.tagName).toBe('SECTION');
+    expect(flex).toHaveTextContent('section');
   });
 
   it('should pass props to the element correctly', () => {
@@ -31,10 +35,13 @@ describe('Flex', () => {
     );
     const flex = screen.getByTestId('flex');
 
+    expect(flex).toBeInTheDocument();
     expect(flex).toHaveTextContent('props');
-    expect(flex).toHaveStyle('flex-direction: column');
-    expect(flex).toHaveStyle('flex-wrap: wrap');
-    expect(flex).toHaveStyle('gap: 1rem');
+    expect(flex).toHaveStyle({
+      'flex-direction': 'column',
+      'flex-wrap': 'wrap',
+      gap: '1rem',
+    });
   });
 });
 
@@ -45,17 +52,21 @@ describe('FlexItem', () => {
 
     expect(flexItem).toBeInTheDocument();
     expect(flexItem.tagName).toBe('DIV');
-    expect(flexItem).toHaveStyle('flex-basis: auto');
-    expect(flexItem).toHaveStyle('flex-grow: 0');
-    expect(flexItem).toHaveStyle('flex-shrink: 1');
+    expect(flexItem).toHaveTextContent('default');
+    expect(flexItem).toHaveStyle({
+      'flex-basis': 'auto',
+      'flex-grow': '0',
+      'flex-shrink': '1',
+    });
   });
 
   it('should render as a different element', () => {
     render(<Flex.Item as="span">span</Flex.Item>);
-    const FlexItem = screen.getByText('span');
+    const flexItem = screen.getByText('span');
 
-    expect(FlexItem).toBeInTheDocument();
-    expect(FlexItem.tagName).toBe('SPAN');
+    expect(flexItem).toBeInTheDocument();
+    expect(flexItem.tagName).toBe('SPAN');
+    expect(flexItem).toHaveTextContent('span');
   });
 
   it('should pass props to the element correctly', () => {
@@ -71,9 +82,12 @@ describe('FlexItem', () => {
     );
     const flexItem = screen.getByTestId('flex-item');
 
+    expect(flexItem).toBeInTheDocument();
     expect(flexItem).toHaveTextContent('props');
-    expect(flexItem).toHaveStyle('flex-basis: content');
-    expect(flexItem).toHaveStyle('flex-grow: 1');
-    expect(flexItem).toHaveStyle('flex-shrink: 2');
+    expect(flexItem).toHaveStyle({
+      'flex-basis': 'content',
+      'flex-grow': '1',
+      'flex-shrink': '2',
+    });
   });
 });

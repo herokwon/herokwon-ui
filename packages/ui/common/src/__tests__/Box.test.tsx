@@ -9,6 +9,7 @@ describe('Box', () => {
 
     expect(box).toBeInTheDocument();
     expect(box.tagName).toBe('DIV');
+    expect(box).toHaveTextContent('default');
   });
 
   it('should render as a different element', () => {
@@ -21,6 +22,7 @@ describe('Box', () => {
 
     expect(box).toBeInTheDocument();
     expect(box.tagName).toBe('A');
+    expect(box).toHaveTextContent('anchor');
   });
 
   it('should pass props to the element correctly', () => {
@@ -31,9 +33,8 @@ describe('Box', () => {
     );
     const box = screen.getByTestId('box');
 
-    expect(box).toHaveTextContent('props');
     expect(box).toBeInTheDocument();
-    expect(box).toHaveClass('box');
     expect(box).toHaveTextContent('props');
+    expect(box).toHaveClass('box');
   });
 });

@@ -11,6 +11,7 @@ describe('Container', () => {
 
     expect(container).toBeInTheDocument();
     expect(container.tagName).toBe('DIV');
+    expect(container).toHaveTextContent('default');
   });
 
   it('should render as a section element', () => {
@@ -19,6 +20,7 @@ describe('Container', () => {
 
     expect(container).toBeInTheDocument();
     expect(container.tagName).toBe('SECTION');
+    expect(container).toHaveTextContent('section');
   });
 
   for (const isFixed of [true, false]) {
@@ -36,6 +38,7 @@ describe('Container', () => {
         );
         const container = screen.getByTestId('container');
 
+        expect(container).toBeInTheDocument();
         expect(container).toHaveTextContent('props');
         if (!isFixed) expect(container).toHaveClass(`max-w-screen-${size}`);
         else {
