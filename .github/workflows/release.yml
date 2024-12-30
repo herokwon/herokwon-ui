@@ -53,6 +53,7 @@ jobs:
 
       - name: Publish on npm
         id: changesets
+        if: startsWith(github.head_ref, 'changeset-release')
         uses: changesets/action@v1
         with:
           publish: npm run publish-packages
