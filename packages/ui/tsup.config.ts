@@ -8,7 +8,7 @@ export default defineConfig(() => ({
   minify: true,
   sourcemap: true,
   treeshake: true,
-  external: ['react', 'react-dom'],
+  external: ['next', 'react', 'react-dom', 'react-icons'],
   esbuildOptions: options => {
     options.jsx = 'automatic';
   },
