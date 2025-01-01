@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { ELEMENT_SIZES } from '../types';
+import { ELEMENT_SIZES } from '../constants';
 
 import Container from '../Container';
 
