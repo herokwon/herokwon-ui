@@ -2,7 +2,7 @@ import type { IconBaseProps, IconType } from 'react-icons';
 
 import type { ElementSize, OmitStrict } from './types';
 
-type IconProps = OmitStrict<IconBaseProps, 'type'> & {
+type IconProps = OmitStrict<IconBaseProps, 'children' | 'type'> & {
   type: IconType;
   size?: ElementSize;
 };
