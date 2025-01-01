@@ -51,9 +51,29 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Check a latest pull request
+        id: pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const result = (await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              commit_sha: context.sha,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })).data[0];
+
+            return {
+              head_ref: result.head.ref,
+              commit: result.merge_commit_sha.substring(0, 7),
+              number: result.number,
+              title: result.title,
+              url: result.html_url,
+              avatar_url: context.payload.repository.owner.avatar_url
+            };
+
       - name: Publish on npm
         id: changesets
-        if: startsWith(github.head_ref, 'changeset-release')
+        if: startsWith(fromJSON(steps.pr.outputs.result).head_ref, 'changeset-release')
         uses: changesets/action@v1
         with:
           publish: npm run publish-packages
@@ -77,25 +97,6 @@ jobs:
 
           result=${result%\\n}
           echo "published_packages=$result" >> $GITHUB_OUTPUT
-
-      - name: Checkout pull request
-        id: pr
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const result = (await github.rest.repos.listPullRequestsAssociatedWithCommit({
-              commit_sha: context.sha,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            })).data[0];
-
-            return {
-              commit: result.merge_commit_sha.substring(0, 7),
-              number: result.number,
-              title: result.title,
-              url: result.html_url,
-              avatar_url: context.payload.repository.owner.avatar_url
-            };
 
   send_slack_message:
     needs: run-changesets
