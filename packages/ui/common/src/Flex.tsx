@@ -12,9 +12,17 @@ import Box from './Box';
 type FlexProps<T extends React.ElementType> = PolymorphicPropsWithoutRef<
   T,
   {
+    gap?: ElementSpacing;
     flexDirection?: PropertyWithoutGlobals<Property.FlexDirection>;
     flexWrap?: PropertyWithoutGlobals<Property.FlexWrap>;
-    gap?: ElementSpacing;
+    justifyContent?: Exclude<
+      PropertyWithoutGlobals<Property.JustifyContent>,
+      'start' | 'end' | 'left' | 'right'
+    >;
+    alignItems?: Exclude<
+      PropertyWithoutGlobals<Property.AlignItems>,
+      'normal' | 'start' | 'end' | 'self-start' | 'self-end'
+    >;
   }
 >;
 type FlexItemProps<T extends React.ElementType> = PolymorphicPropsWithoutRef<
@@ -29,9 +37,11 @@ type FlexItemProps<T extends React.ElementType> = PolymorphicPropsWithoutRef<
 export default function Flex<T extends React.ElementType = 'div'>({
   as,
   children,
+  gap = 0,
   flexDirection = 'row',
   flexWrap = 'nowrap',
-  gap = 0,
+  justifyContent = 'flex-start',
+  alignItems = 'stretch',
   ...props
 }: FlexProps<T>) {
   const element = as || 'div';
@@ -47,9 +57,11 @@ export default function Flex<T extends React.ElementType = 'div'>({
       className={`flex ${elemProps.className ?? ''}`}
       style={{
         ...elemProps.style,
+        gap: `${gap * 0.25}rem`,
         flexDirection,
         flexWrap,
-        gap: `${gap * 0.25}rem`,
+        justifyContent,
+        alignItems,
       }}
     >
       {children}
