@@ -1,5 +1,6 @@
 import './index.css';
 
+export * from './constants';
 export * from './types';
 
 export { default as Box } from './Box';
