@@ -60,6 +60,7 @@ export default function Container<T extends ContainerElementType = 'div'>({
                   : 'max-w-screen-xl'
       } ${elemProps.className ?? ''}`}
       style={{
+        ...elemProps.style,
         padding: `${padding * 0.25}rem`,
       }}
     >
