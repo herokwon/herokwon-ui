@@ -77,7 +77,7 @@ jobs:
             result=$(jq '. + [{ name: '$data' }]' assignees.json)
             echo "$result" > assignees.json
           done
-          for data in $(echo "$labels" | jq -c '.[]'); do
+          for data in $(echo "$labels" | jq -Rr 'gsub(" "; "")' | jq -c '.[]'); do
             result=$(jq '. + [{ name: '$data' }]' labels.json)
             echo "$result" > labels.json
           done
