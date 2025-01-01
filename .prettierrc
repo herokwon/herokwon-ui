@@ -1,7 +1,7 @@
 {
   "singleQuote": true,
   "arrowParens": "avoid",
-  "importOrder": ["(.css)$", "types$", "^[../]", "^[./]"],
+  "importOrder": ["(.css)$", "types$", "constants$", "^[../]", "^[./]"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
   "plugins": [
