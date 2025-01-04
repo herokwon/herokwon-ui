@@ -131,7 +131,7 @@ jobs:
               Title: {
                 title: [{
                   text: {
-                    content: "${{ env.ISSUE_TITLE }}"    
+                    content: "$ISSUE_TITLE"    
                   }
                 }]
               },
@@ -145,7 +145,7 @@ jobs:
                 date: ${{ steps.properties.outputs.date }}  
               },
               Link: {
-                url: "${{ env.ISSUE_URL }}"  
+                url: "$ISSUE_URL"  
               }  
             }
           }' body.json)
