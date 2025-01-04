@@ -1,4 +1,4 @@
-@import '../common/src/index.css';
+@import '@herokwon/ui-common/dist/index.css';
 
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
