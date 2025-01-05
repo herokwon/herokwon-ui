@@ -31,6 +31,8 @@ jobs:
 
       - name: Check notion database
         id: notion
+        env:
+          ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
           results=$(curl -X POST "https://api.notion.com/v1/databases/${{ secrets.NOTION_DATABASE_ID }}/query" \
             -H "Authorization: Bearer ${{ secrets.NOTION_API_KEY }}" \
@@ -40,7 +42,7 @@ jobs:
               "filter": {
                 "property": "Link",
                 "url": {
-                  "equals": "${{ github.event.issue.html_url }}"
+                  "equals": "$ISSUE_URL"
                 }
               },
               "page_size": 1
@@ -66,35 +68,25 @@ jobs:
     steps:
       - name: Setup page properties
         id: properties
+        env:
+          CREATED_AT: ${{ github.event.issue.created_at }}
+          CLOSED_AT: ${{ github.event.issue.closed_at }}
         run: |
           status="${{ needs.check-existence.outputs.status }}"
-          assignees='${{ toJSON(github.event.issue.assignees.*.login ) }}'
-          labels='${{ toJSON(github.event.issue.labels.*.name) }}'
+          assignees=$(echo '${{ toJSON(github.event.issue.assignees.*.login) }}' | jq '[.[] | {name: .}]' | jq -c .)
+          labels=$(echo '${{ toJSON(github.event.issue.labels.*.name) }}' | jq '[.[] | {name: .}]' | jq -c .)
+          date=$(echo '{
+            "start": "$CREATED_AT",
+            "end": "$end",
+            "time_zone": "${{ vars.TIMEZONE }}"
+          }' | jq -c .)
 
-          echo "[]" > assignees.json
-          echo "[]" > labels.json
-          echo '{ "start": "${{ github.event.issue.created_at }}", "end": null, "time_zone": "${{ vars.TIMEZONE }}" }' > date.json
-
-          for data in $(echo "$assignees" | jq -c '.[]'); do
-            result=$(jq '. + [{ name: '$data' }]' assignees.json)
-            echo "$result" > assignees.json
-          done
-          for data in $(echo "$labels" | jq -Rr 'gsub(" "; "")' | jq -c '.[]'); do
-            result=$(jq '. + [{ name: '$data' }]' labels.json)
-            echo "$result" > labels.json
-          done
-
-          if [ "${{ github.event.issue.closed_at }}" != "" ]; then
+          if [ "$CLOSED_AT" != "" ]; then
             status="Closed"
-            date=$(jq '.end="${{ github.event.issue.closed_at }}"' date.json)
-            echo "$date" > date.json
+            date=$(echo "$date" | jq '.end="$CLOSED_AT"' | jq -c .)
           else
             status="Opened"
           fi
-
-          assignees=$(echo "$(cat assignees.json)" | jq -c .)
-          labels=$(echo "$(cat labels.json)" | jq -c .)
-          date=$(echo "$(cat date.json)" | jq -c .)
 
           echo "status=$status" >> $GITHUB_OUTPUT
           echo "assignees=$assignees" >> $GITHUB_OUTPUT
@@ -177,7 +169,7 @@ jobs:
         if: ${{ needs.check-existence.outputs.page_id == '' }}
         run: gh issue comment "$NUMBER" --body "$BODY"
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_REPO: ${{ github.repository }}
           NUMBER: ${{ github.event.issue.number }}
           BODY: |

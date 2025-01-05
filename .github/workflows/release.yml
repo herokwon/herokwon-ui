@@ -103,6 +103,10 @@ jobs:
     name: Send slack message
     if: needs.run-changesets.outputs.published == 'true' || needs.run-changesets.outputs.published_packages != '' || failure()
     runs-on: ubuntu-latest
+    env:
+      REPO: ${{ github.repository }}
+      REPO_OWNER: ${{ github.repository_owner }}
+      RUN_ID: ${{ github.run_id }}
     steps:
       - name: Send message on success
         if: needs.run-changesets.outputs.published == 'true' && needs.run-changesets.outputs.published_packages != '' && success()
@@ -128,11 +132,11 @@ jobs:
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Commit*\n<https://github.com/${{ github.repository }}/commit/${{ fromJSON(needs.run-changesets.outputs.pr).commit }}|${{ fromJSON(needs.run-changesets.outputs.pr).commit }}>"
+                      text: "*Commit*\n<https://github.com/$REPO/commit/${{ fromJSON(needs.run-changesets.outputs.pr).commit }}|${{ fromJSON(needs.run-changesets.outputs.pr).commit }}>"
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Pull request*\n<https://github.com/${{ github.repository }}/pull/${{ fromJSON(needs.run-changesets.outputs.pr).number }}|[#${{ fromJSON(needs.run-changesets.outputs.pr).number }}] ${{ fromJSON(needs.run-changesets.outputs.pr).title }}>"
+                      text: "*Pull request*\n<https://github.com/$REPO/pull/${{ fromJSON(needs.run-changesets.outputs.pr).number }}|[#${{ fromJSON(needs.run-changesets.outputs.pr).number }}] ${{ fromJSON(needs.run-changesets.outputs.pr).title }}>"
                   - type: "actions"
                     elements:
                       - type: "button"
@@ -140,13 +144,13 @@ jobs:
                           type: "plain_text"
                           text: "⭐\t Workflow details"
                           emoji: true
-                        url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                        url: "https://github.com/$REPO/actions/runs/$RUN_ID"
                       - type: "button"
                         text:
                           type: "plain_text"
                           text: "📄\t Release note"
                           emoji: true
-                        url: "https://github.com/${{ github.repository }}/pull/${{ fromJSON(needs.run-changesets.outputs.pr).number }}"
+                        url: "https://github.com/$REPO/pull/${{ fromJSON(needs.run-changesets.outputs.pr).number }}"
                   - type: "divider"
                   - type: "context"
                     elements:
@@ -154,7 +158,7 @@ jobs:
                         image_url: "${{ fromJSON(needs.run-changesets.outputs.pr).avatar_url }}"
                         alt_text: "avatar_img"
                       - type: "mrkdwn"
-                        text: "<https://github.com/${{ github.repository_owner }}|*${{ github.repository_owner }}*> has approved this message."
+                        text: "<https://github.com/$REPO_OWNER|*$REPO_OWNER*> has approved this message."
 
       - name: Send message on failure
         if: needs.run-changesets.outputs.published == 'false' && needs.run-changesets.outputs.published_packages == '' && failure()
@@ -176,11 +180,11 @@ jobs:
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Commit*\n<https://github.com/${{ github.repository }}/commit/${{ fromJSON(needs.run-changesets.outputs.pr).commit }}|${{ fromJSON(needs.run-changesets.outputs.pr).commit }}>"
+                      text: "*Commit*\n<https://github.com/$REPO/commit/${{ fromJSON(needs.run-changesets.outputs.pr).commit }}|${{ fromJSON(needs.run-changesets.outputs.pr).commit }}>"
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Pull request*\n<https://github.com/${{ github.repository }}/pull/${{ fromJSON(needs.run-changesets.outputs.pr).number }}|[#${{ fromJSON(needs.run-changesets.outputs.pr).number }}] ${{ fromJSON(needs.run-changesets.outputs.pr).title }}>"
+                      text: "*Pull request*\n<https://github.com/$REPO/pull/${{ fromJSON(needs.run-changesets.outputs.pr).number }}|[#${{ fromJSON(needs.run-changesets.outputs.pr).number }}] ${{ fromJSON(needs.run-changesets.outputs.pr).title }}>"
                   - type: "actions"
                     elements:
                       - type: "button"
@@ -188,7 +192,7 @@ jobs:
                           type: "plain_text"
                           text: "🔍\t Workflow details"
                           emoji: true
-                        url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                        url: "https://github.com/$REPO/actions/runs/$RUN_ID"
                   - type: "divider"
                   - type: "context"
                     elements:
@@ -196,4 +200,4 @@ jobs:
                         image_url: "${{ fromJSON(needs.run-changesets.outputs.pr).avatar_url }}"
                         alt_text: "avatar_img"
                       - type: "mrkdwn"
-                        text: "<https://github.com/${{ github.repository_owner }}|*${{ github.repository_owner }}*> has approved this message."
+                        text: "<https://github.com/$REPO_OWNER|*$REPO_OWNER*> has approved this message."
