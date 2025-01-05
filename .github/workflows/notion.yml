@@ -68,33 +68,20 @@ jobs:
         id: properties
         run: |
           status="${{ needs.check-existence.outputs.status }}"
-          assignees='${{ toJSON(github.event.issue.assignees.*.login ) }}'
-          labels='${{ toJSON(github.event.issue.labels.*.name) }}'
-
-          echo "[]" > assignees.json
-          echo "[]" > labels.json
-          echo '{ "start": "${{ github.event.issue.created_at }}", "end": null, "time_zone": "${{ vars.TIMEZONE }}" }' > date.json
-
-          for data in $(echo "$assignees" | jq -c '.[]'); do
-            result=$(jq '. + [{ name: '$data' }]' assignees.json)
-            echo "$result" > assignees.json
-          done
-          for data in $(echo "$labels" | jq -Rr 'gsub(" "; "")' | jq -c '.[]'); do
-            result=$(jq '. + [{ name: '$data' }]' labels.json)
-            echo "$result" > labels.json
-          done
+          assignees=$(echo '${{ toJSON(github.event.issue.assignees.*.login) }}' | jq '[.[] | {name: .}]' | jq -c .)
+          labels=$(echo '${{ toJSON(github.event.issue.labels.*.name) }}' | jq '[.[] | {name: .}]' | jq -c .)
+          date=$(echo '{
+            "start": "${{ github.event.issue.created_at }}",
+            "end": "$end",
+            "time_zone": "${{ vars.TIMEZONE }}"
+          }' | jq -c .)
 
           if [ "${{ github.event.issue.closed_at }}" != "" ]; then
             status="Closed"
-            date=$(jq '.end="${{ github.event.issue.closed_at }}"' date.json)
-            echo "$date" > date.json
+            date=$(echo "$date" | jq '.end="${{ github.event.issue.closed_at }}"' | jq -c .)
           else
             status="Opened"
           fi
-
-          assignees=$(echo "$(cat assignees.json)" | jq -c .)
-          labels=$(echo "$(cat labels.json)" | jq -c .)
-          date=$(echo "$(cat date.json)" | jq -c .)
 
           echo "status=$status" >> $GITHUB_OUTPUT
           echo "assignees=$assignees" >> $GITHUB_OUTPUT
