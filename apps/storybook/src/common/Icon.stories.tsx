@@ -1,5 +1,5 @@
-import { ELEMENT_SIZES, Icon } from '@herokwon/ui';
 import type { Meta, StoryObj } from '@storybook/react';
+import { ELEMENT_SIZES, Icon } from '@ui';
 import { FaCheck } from 'react-icons/fa6';
 
 const meta = {

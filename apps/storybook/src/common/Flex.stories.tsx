@@ -1,5 +1,5 @@
-import { Container, Flex } from '@herokwon/ui';
 import type { Meta, StoryObj } from '@storybook/react';
+import { Container, Flex } from '@ui';
 
 const meta = {
   title: 'Common/Flex',

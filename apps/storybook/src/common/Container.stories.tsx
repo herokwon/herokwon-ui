@@ -1,5 +1,5 @@
-import { Container } from '@herokwon/ui';
 import type { Meta, StoryObj } from '@storybook/react';
+import { Container } from '@ui';
 import { useEffect, useState } from 'react';
 
 const meta = {
