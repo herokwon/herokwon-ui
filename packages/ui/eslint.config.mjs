@@ -29,5 +29,6 @@ export default [
         tsconfigRootDir: __dirname,
       },
     },
+    ignores: ['coverage/**/*'],
   },
 ];

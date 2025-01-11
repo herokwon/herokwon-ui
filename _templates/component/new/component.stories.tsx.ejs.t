@@ -2,7 +2,7 @@
 to: apps/storybook/src/<%= category %>/<%= component %>.stories.tsx
 ---
 import { Meta, StoryObj } from '@storybook/react';
-import { <%= component %> } from '@repo/ui/<%= category %>';
+import { <%= component %> } from '@ui';
 
 const meta = {
   title: '<%= h.inflection.capitalize(category) %>/<%= component %>',

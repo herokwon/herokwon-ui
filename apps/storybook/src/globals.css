@@ -1,4 +1,5 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/variable/pretendardvariable.min.css');
+@import '@herokwon/ui/dist/index.css';
 
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
