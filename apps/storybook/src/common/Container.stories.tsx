@@ -25,10 +25,6 @@ const ContainerRender = ({
   children,
   ...props
 }: Parameters<typeof Container>[0]) => {
-  const [screenSize, setScreenSize] = useState<Size>({
-    width: 0,
-    height: 0,
-  });
   const [containerSize, setContainerSize] = useState<Size>({
     width: 0,
     height: 0,
@@ -48,7 +44,7 @@ const ContainerRender = ({
 
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
-  }, [screenSize]);
+  }, []);
 
   return (
     <div className="h-[calc(100vh-2rem)] w-[calc(100vw-2rem)] border">
