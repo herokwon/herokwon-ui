@@ -1,4 +1,4 @@
-import { Container, Grid } from '@herokwon/ui';
+import { Container, Grid } from '@herokwon/ui/common';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {

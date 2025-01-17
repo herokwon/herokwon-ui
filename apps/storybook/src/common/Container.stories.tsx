@@ -1,4 +1,4 @@
-import { Container, ELEMENT_SPACINGS } from '@herokwon/ui';
+import { Container, ELEMENT_SPACINGS } from '@herokwon/ui/common';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
