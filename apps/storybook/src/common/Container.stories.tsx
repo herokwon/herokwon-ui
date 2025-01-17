@@ -1,5 +1,5 @@
+import { Container, ELEMENT_SPACINGS } from '@herokwon/ui/common';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Container } from '@ui';
 import { useEffect, useState } from 'react';
 
 const meta = {
@@ -8,8 +8,16 @@ const meta = {
   component: Container,
   args: {
     as: 'div',
+    fixed: false,
     maxWidth: 'md',
+    padding: 0,
     children: 'Try resize!',
+  },
+  argTypes: {
+    padding: {
+      control: 'select',
+      options: ELEMENT_SPACINGS,
+    },
   },
 } satisfies Meta<typeof Container>;
 export default meta;
@@ -61,7 +69,6 @@ const ContainerRender = ({
 };
 
 export const Default: Story = {
-  args: {},
   render: ({ ...props }) => <ContainerRender {...props} />,
 };
 

@@ -2,5 +2,7 @@
   "onlyChanged": true,
   "projectId": "Project:675e572aba20f6133e6c8760",
   "storybookBaseDir": "apps\\storybook",
-  "zip": true
+  "autoAcceptChanges": "main",
+  "zip": true,
+  "skip": "dependabot/**"
 }
