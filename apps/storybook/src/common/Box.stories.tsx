@@ -1,5 +1,5 @@
+import { Box } from '@herokwon/ui';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Box } from '@ui';
 
 const meta = {
   title: 'Common/Box',
@@ -22,7 +22,7 @@ export const BorderDefault: Story = {
   render: ({ ...props }) => (
     <BoxRender
       {...props}
-      className={`border border-black dark:border-white ${props.className ?? ''} `}
+      className={`border border-black dark:border-white ${props.className ?? ''}`}
     />
   ),
 };
@@ -34,7 +34,7 @@ export const RedButton: Story = {
   render: ({ ...props }) => (
     <BoxRender
       {...props}
-      className={`bg-red-light dark:bg-red-dark ${props.className ?? ''} `}
+      className={`bg-red-light dark:bg-red-dark ${props.className ?? ''}`}
     />
   ),
 };
@@ -46,7 +46,7 @@ export const BlueAnchor: Story = {
   render: ({ ...props }) => (
     <BoxRender
       {...props}
-      className={`bg-blue-light dark:bg-blue-dark ${props.className ?? ''} `}
+      className={`bg-blue-light dark:bg-blue-dark ${props.className ?? ''}`}
     />
   ),
 };
@@ -58,7 +58,7 @@ export const YellowSpan: Story = {
   render: ({ ...props }) => (
     <BoxRender
       {...props}
-      className={`bg-yellow-light dark:bg-yellow-dark ${props.className ?? ''} `}
+      className={`bg-yellow-light dark:bg-yellow-dark ${props.className ?? ''}`}
     />
   ),
 };

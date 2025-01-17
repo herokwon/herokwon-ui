@@ -1,5 +1,5 @@
+import { Container, ELEMENT_SPACINGS, Flex } from '@herokwon/ui';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Container, Flex } from '@ui';
 
 const meta = {
   title: 'Common/Flex',
@@ -7,11 +7,40 @@ const meta = {
   component: Flex,
   args: {
     gap: 4,
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
   },
   argTypes: {
+    gap: {
+      control: 'select',
+      options: ELEMENT_SPACINGS,
+    },
+    flexDirection: {
+      control: 'select',
+      options: ['column', 'column-reverse', 'row', 'row-reverse'],
+    },
     flexWrap: {
       control: 'select',
       options: ['nowrap', 'wrap', 'wrap-reverse'],
+    },
+    justifyContent: {
+      control: 'select',
+      options: [
+        'center',
+        'flex-start',
+        'flex-end',
+        'normal',
+        'space-around',
+        'space-between',
+        'space-evenly',
+        'stretch',
+      ],
+    },
+    alignItems: {
+      control: 'select',
+      options: ['baseline', 'center', 'flex-start', 'flex-end', 'stretch'],
     },
   },
 } satisfies Meta<typeof Flex>;

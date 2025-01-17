@@ -1,11 +1,5 @@
 {
   "extends": "@repo/typescript-config/storybook.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@ui": ["../../packages/ui/src"]
-    }
-  },
   "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
