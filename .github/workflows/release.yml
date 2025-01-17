@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  chromatic:
-    name: Chromatic
+  deploy-storybook:
+    name: Deploy Storybook
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
