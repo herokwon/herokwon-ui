@@ -11,7 +11,6 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@herokwon/ui": "*",
     "next": "^15",
     "react": "^19",
     "react-dom": "^19",
