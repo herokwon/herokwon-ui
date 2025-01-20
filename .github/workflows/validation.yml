@@ -28,7 +28,6 @@ jobs:
 
   check-types:
     name: Check types
-    needs: check-lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -52,7 +51,6 @@ jobs:
 
   test:
     name: Test
-    needs: check-types
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -73,7 +71,7 @@ jobs:
 
   merge:
     name: Merge
-    needs: test
+    needs: [check-lint, check-types, test]
     runs-on: ubuntu-latest
     if: startsWith(github.head_ref, 'changeset-release') || github.event.pull_request.user.login == 'dependabot[bot]'
     permissions:
