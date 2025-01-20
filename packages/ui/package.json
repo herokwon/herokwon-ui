@@ -7,14 +7,8 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
-    "./common": {
-      "types": "./common/dist/index.d.ts",
-      "default": "./common/dist/index.js"
-    },
-    "./config": {
-      "types": "./config/dist/index.d.ts",
-      "default": "./config/dist/index.js"
-    }
+    "./common": "./common/src/index.ts",
+    "./config": "./config/src/index.ts"
   },
   "files": [
     "dist/**/*"
