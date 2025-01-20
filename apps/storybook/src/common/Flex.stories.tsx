@@ -1,5 +1,5 @@
-import { Container, ELEMENT_SPACINGS, Flex } from '@herokwon/ui/common';
 import type { Meta, StoryObj } from '@storybook/react';
+import { Container, ELEMENT_SPACINGS, Flex } from '@ui/common';
 
 const meta = {
   title: 'Common/Flex',
