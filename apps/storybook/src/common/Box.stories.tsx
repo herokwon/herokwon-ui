@@ -1,5 +1,5 @@
+import { Box } from '@herokwon/ui/common';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Box } from '@ui/common';
 
 const meta = {
   title: 'Common/Box',

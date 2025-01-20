@@ -1,5 +1,5 @@
+import { Container, ELEMENT_SPACINGS } from '@herokwon/ui/common';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Container, ELEMENT_SPACINGS } from '@ui/common';
 import { useEffect, useState } from 'react';
 
 const meta = {

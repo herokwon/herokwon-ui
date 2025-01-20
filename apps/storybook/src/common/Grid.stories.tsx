@@ -1,5 +1,5 @@
+import { Container, Grid } from '@herokwon/ui/common';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Container, Grid } from '@ui/common';
 
 const meta = {
   title: 'Common/Grid',
