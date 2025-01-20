@@ -1,7 +1,7 @@
 ---
 to: apps/storybook/src/<%= category %>/<%= component %>.stories.tsx
 ---
-import { <%= component %> } from '@herokwon/ui/<%= category %>';
+import { <%= component %> } from '@ui/<%= category %>';
 import { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
