@@ -16,6 +16,9 @@ concurrency:
   group: Notion Synchronization
   cancel-in-progress: true
 
+env:
+  ISSUE_URL: ${{ github.event.issue.html_url }}
+
 jobs:
   check-existence:
     name: Check existence
@@ -31,8 +34,6 @@ jobs:
 
       - name: Check notion database
         id: notion
-        env:
-          ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
           results=$(curl -X POST "https://api.notion.com/v1/databases/${{ secrets.NOTION_DATABASE_ID }}/query" \
             -H "Authorization: Bearer ${{ secrets.NOTION_API_KEY }}" \
@@ -42,7 +43,7 @@ jobs:
               "filter": {
                 "property": "Link",
                 "url": {
-                  "equals": "$ISSUE_URL"
+                  "equals": "${{ env.ISSUE_URL }}"
                 }
               },
               "page_size": 1
@@ -76,14 +77,14 @@ jobs:
           assignees=$(echo '${{ toJSON(github.event.issue.assignees.*.login) }}' | jq '[.[] | {name: .}]' | jq -c .)
           labels=$(echo '${{ toJSON(github.event.issue.labels.*.name) }}' | jq '[.[] | {name: .}]' | jq -c .)
           date=$(echo '{
-            "start": "$CREATED_AT",
-            "end": "$end",
+            "start": "${{ env.CREATED_AT }}",
+            "end": null,
             "time_zone": "${{ vars.TIMEZONE }}"
           }' | jq -c .)
 
-          if [ "$CLOSED_AT" != "" ]; then
+          if [ "${{ env.CLOSED_AT }}" != "" ]; then
             status="Closed"
-            date=$(echo "$date" | jq '.end="$CLOSED_AT"' | jq -c .)
+            date=$(echo "$date" | jq '.end="${{ env.CLOSED_AT }}"' | jq -c .)
           else
             status="Opened"
           fi
@@ -97,7 +98,6 @@ jobs:
         id: params
         env:
           ISSUE_TITLE: ${{ github.event.issue.title }}
-          ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
           echo "{}" > body.json
           method="PATCH"
@@ -123,7 +123,7 @@ jobs:
               Title: {
                 title: [{
                   text: {
-                    content: "$ISSUE_TITLE"    
+                    content: "${{ env.ISSUE_TITLE }}"    
                   }
                 }]
               },
@@ -137,7 +137,7 @@ jobs:
                 date: ${{ steps.properties.outputs.date }}  
               },
               Link: {
-                url: "$ISSUE_URL"  
+                url: "${{ env.ISSUE_URL }}"  
               }  
             }
           }' body.json)
