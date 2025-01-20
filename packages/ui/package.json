@@ -6,10 +6,6 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
-  "exports": {
-    "./common": "./common/src/index.ts",
-    "./config": "./config/src/index.ts"
-  },
   "files": [
     "dist/**/*"
   ],
@@ -41,7 +37,7 @@
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.26.0",
     "@eslint/eslintrc": "^3.2.0",
-    "@eslint/js": "^9.17.0",
+    "@eslint/js": "^9.18.0",
     "@herokwon/ui-common": "^0.2.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",

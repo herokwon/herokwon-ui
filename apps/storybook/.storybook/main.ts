@@ -1,5 +1,6 @@
 import type { StorybookConfig } from '@storybook/nextjs';
-import { dirname, join } from 'path';
+import { dirname, join, resolve } from 'path';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 
 /**
  * This function is used to resolve the absolute path of a package.
@@ -29,6 +30,20 @@ const config: StorybookConfig = {
   },
   typescript: {
     reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      shouldExtractLiteralValuesFromEnum: true,
+      propFilter: prop =>
+        prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
+    },
+  },
+  webpackFinal: async config => {
+    config.resolve?.plugins?.push(
+      new TsconfigPathsPlugin({
+        configFile: resolve(__dirname, '../tsconfig.json'),
+      }),
+    );
+
+    return config;
   },
   // staticDirs: ['..\\public'],
 };
