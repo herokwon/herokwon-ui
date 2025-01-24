@@ -156,9 +156,17 @@ jobs:
       REPO: ${{ github.repository }}
       REPO_OWNER: ${{ github.repository_owner }}
       RUN_ID: ${{ github.run_id }}
+      PUBLISHED: ${{ needs.run-changesets.outputs.published }}
+      PUBLISHED_PACKAGES: ${{ needs.run-changesets.outputs.published_packages }}
+      PR_HEAD_REF: ${{ fromJSON(needs.run-changesets.outputs.pr).head_ref }}
+      PR_COMMIT: ${{ fromJSON(needs.run-changesets.outputs.pr).commit }}
+      PR_NUMBER: ${{ fromJSON(needs.run-changesets.outputs.pr).number }}
+      PR_TITLE: ${{ fromJSON(needs.run-changesets.outputs.pr).title }}
+      PR_URL: ${{ fromJSON(needs.run-changesets.outputs.pr).url }}
+      AVATAR_URL: ${{ fromJSON(needs.run-changesets.outputs.pr).avatar_url }}
     steps:
       - name: Send message on success
-        if: needs.run-changesets.outputs.published == 'true' && needs.run-changesets.outputs.published_packages != '' && success()
+        if: env.PUBLISHED == 'true' && env.PUBLISHED_PACKAGES && success()
         uses: slackapi/slack-github-action@v2
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -176,16 +184,16 @@ jobs:
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "${{ needs.run-changesets.outputs.published_packages }}"
+                      text: "$PUBLISHED_PACKAGES"
                   - type: "divider"
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Commit*\n<https://github.com/$REPO/commit/${{ fromJSON(needs.run-changesets.outputs.pr).commit }}|${{ fromJSON(needs.run-changesets.outputs.pr).commit }}>"
+                      text: "*Commit*\n<https://github.com/$REPO/commit/$PR_COMMIT|$PR_COMMIT>"
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Pull request*\n<https://github.com/$REPO/pull/${{ fromJSON(needs.run-changesets.outputs.pr).number }}|[#${{ fromJSON(needs.run-changesets.outputs.pr).number }}] ${{ fromJSON(needs.run-changesets.outputs.pr).title }}>"
+                      text: "*Pull request*\n<https://github.com/$REPO/pull/$PR_NUMBER|[#$PR_NUMBER] $PR_TITLE>"
                   - type: "actions"
                     elements:
                       - type: "button"
@@ -199,18 +207,18 @@ jobs:
                           type: "plain_text"
                           text: "📄\t Release note"
                           emoji: true
-                        url: "https://github.com/$REPO/pull/${{ fromJSON(needs.run-changesets.outputs.pr).number }}"
+                        url: "https://github.com/$REPO/pull/$PR_NUMBER"
                   - type: "divider"
                   - type: "context"
                     elements:
                       - type: "image"
-                        image_url: "${{ fromJSON(needs.run-changesets.outputs.pr).avatar_url }}"
+                        image_url: "$AVATAR_URL"
                         alt_text: "avatar_img"
                       - type: "mrkdwn"
                         text: "<https://github.com/$REPO_OWNER|*$REPO_OWNER*> has approved this message."
 
       - name: Send message on failure
-        if: needs.run-changesets.outputs.published == 'false' && needs.run-changesets.outputs.published_packages == '' && failure()
+        if: env.PUBLISHED == 'false' && !env.PUBLISHED_PACKAGES && failure()
         uses: slackapi/slack-github-action@v2
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -229,11 +237,11 @@ jobs:
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Commit*\n<https://github.com/$REPO/commit/${{ fromJSON(needs.run-changesets.outputs.pr).commit }}|${{ fromJSON(needs.run-changesets.outputs.pr).commit }}>"
+                      text: "*Commit*\n<https://github.com/$REPO/commit/$PR_COMMIT|$PR_COMMIT>"
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Pull request*\n<https://github.com/$REPO/pull/${{ fromJSON(needs.run-changesets.outputs.pr).number }}|[#${{ fromJSON(needs.run-changesets.outputs.pr).number }}] ${{ fromJSON(needs.run-changesets.outputs.pr).title }}>"
+                      text: "*Pull request*\n<https://github.com/$REPO/pull/$PR_NUMBER|[#$PR_NUMBER] $PR_TITLE>"
                   - type: "actions"
                     elements:
                       - type: "button"
@@ -246,7 +254,7 @@ jobs:
                   - type: "context"
                     elements:
                       - type: "image"
-                        image_url: "${{ fromJSON(needs.run-changesets.outputs.pr).avatar_url }}"
+                        image_url: "$AVATAR_URL"
                         alt_text: "avatar_img"
                       - type: "mrkdwn"
                         text: "<https://github.com/$REPO_OWNER|*$REPO_OWNER*> has approved this message."
