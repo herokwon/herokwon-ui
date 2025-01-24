@@ -5,6 +5,7 @@ on:
     types:
       - opened
       - reopened
+      - deleted
       - edited
       - closed
       - assigned
@@ -69,8 +70,19 @@ jobs:
     env:
       PAGE_ID: ${{ needs.check-existence.outputs.page_id }}
     steps:
+      - name: Search issue on Github
+        id: search
+        if: ${{ env.PAGE_ID }}
+        run: gh issue view "$ISSUE_NUMBER" --repo "$GH_REPO"
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        continue-on-error: true
+
       - name: Setup page properties
         id: properties
+        if: ${{ steps.search.outcome == 'skipped' || steps.search.outcome == 'success' }}
         env:
           STATUS: ${{ needs.check-existence.outputs.status }}
           CREATED_AT: ${{ github.event.issue.created_at }}
@@ -108,42 +120,48 @@ jobs:
 
           if [ "'$PAGE_ID'" != "" ]; then
             request_url+="/'$PAGE_ID'"
+          else
+            if [ "${{ steps.properties.outputs.status }}" == "Opened" ]; then
+              method="POST"
+              body=$(jq '. + { parent: { database_id: "${{ secrets.NOTION_DATABASE_ID }}" } }' body.json)
+              echo "$body" > body.json
+            fi
           fi
 
-          if [ "'$PAGE_ID'" == "" -a "${{ steps.properties.outputs.status }}" == "Opened" ]; then
-            method="POST"
-            body=$(jq '. + { parent: { database_id: "${{ secrets.NOTION_DATABASE_ID }}" } }' body.json)
-            echo "$body" > body.json
+          if [ "${{ steps.properties.outcome }}" == "skipped" ]; then
+            body=$(jq '. + {
+              in_trash: "true"
+            }' body.json)
+          else
+            body=$(jq '. + { 
+              properties: {
+                Status: { 
+                  select: { 
+                    name: "${{ steps.properties.outputs.status }}"
+                  } 
+                },
+                Title: {
+                  title: [{
+                    text: {
+                      content: "'$ISSUE_TITLE'"    
+                    }
+                  }]
+                },
+                Assignees: {
+                  multi_select: ${{ steps.properties.outputs.assignees }}  
+                },
+                Labels: {
+                  multi_select: ${{ steps.properties.outputs.labels }}  
+                },
+                Date: {
+                  date: ${{ steps.properties.outputs.date }}  
+                },
+                Link: {
+                  url: "'$ISSUE_URL'"  
+                }  
+              }
+            }' body.json)
           fi
-
-          body=$(jq '. + { 
-            properties: {
-              Status: { 
-                select: { 
-                  name: "${{ steps.properties.outputs.status }}"
-                } 
-              },
-              Title: {
-                title: [{
-                  text: {
-                    content: "'$ISSUE_TITLE'"    
-                  }
-                }]
-              },
-              Assignees: {
-                multi_select: ${{ steps.properties.outputs.assignees }}  
-              },
-              Labels: {
-                multi_select: ${{ steps.properties.outputs.labels }}  
-              },
-              Date: {
-                date: ${{ steps.properties.outputs.date }}  
-              },
-              Link: {
-                url: "'$ISSUE_URL'"  
-              }  
-            }
-          }' body.json)
 
           echo "$body" > body.json
 
@@ -153,7 +171,7 @@ jobs:
 
       - name: Synchronize page properties with Notion
         id: sync
-        if: ${{  !(env.PAGE_ID == '' && steps.params.outputs.method == 'PATCH') }}
+        if: ${{ !(!env.PAGE_ID && steps.params.outputs.method == 'PATCH') }}
         run: |
           result=$(curl -X ${{ steps.params.outputs.method }} "${{ steps.params.outputs.request_url }}" \
             -H "Authorization: Bearer ${{ secrets.NOTION_API_KEY }}" \
@@ -169,7 +187,7 @@ jobs:
           echo "id=$prefix-$number" >> $GITHUB_OUTPUT
 
       - name: Comment on issue
-        if: ${{ env.PAGE_ID == '' }}
+        if: ${{ !env.PAGE_ID }}
         run: gh issue comment "$NUMBER" --body "$BODY"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
