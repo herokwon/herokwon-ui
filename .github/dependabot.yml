@@ -19,6 +19,7 @@ updates:
       time: '02:00'
       timezone: 'Asia/Seoul'
     ignore:
+      - dependency-name: '*storybook*'
       - dependency-name: next
         update-types: ['version-update:semver-major']
       - dependency-name: react
