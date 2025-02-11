@@ -38,26 +38,26 @@ export default function Container<T extends ContainerElementType = 'div'>({
       as={element}
       className={`${
         fixed
-          ? `xs:is-[.container]:max-w-[512px] container xl:!max-w-screen-xl ${
+          ? `xs:is-[.container]:max-w-[512px] container xl:max-w-(--breakpoint-xl)! ${
               maxWidth === 'xs'
-                ? 'xs:!max-w-screen-xs'
+                ? 'xs:max-w-screen-xs!'
                 : maxWidth === 'sm'
-                  ? 'sm:!max-w-screen-sm'
+                  ? 'sm:max-w-(--breakpoint-sm)!'
                   : maxWidth === 'md'
-                    ? 'md:!max-w-screen-md'
+                    ? 'md:max-w-(--breakpoint-md)!'
                     : maxWidth === 'lg'
-                      ? 'lg:!max-w-screen-lg'
-                      : 'xl:!max-w-screen-xl'
+                      ? 'lg:max-w-(--breakpoint-lg)!'
+                      : 'xl:max-w-(--breakpoint-xl)!'
             }`
           : maxWidth === 'xs'
             ? 'max-w-screen-xs'
             : maxWidth === 'sm'
-              ? 'max-w-screen-sm'
+              ? 'max-w-(--breakpoint-sm)'
               : maxWidth === 'md'
-                ? 'max-w-screen-md'
+                ? 'max-w-(--breakpoint-md)'
                 : maxWidth === 'lg'
-                  ? 'max-w-screen-lg'
-                  : 'max-w-screen-xl'
+                  ? 'max-w-(--breakpoint-lg)'
+                  : 'max-w-(--breakpoint-xl)'
       } ${elemProps.className ?? ''}`}
       style={{
         ...elemProps.style,

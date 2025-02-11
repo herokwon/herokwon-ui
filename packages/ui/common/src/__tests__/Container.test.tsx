@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
+import type { ElementSize } from '../types';
+
 import { ELEMENT_SIZES } from '../constants';
 
 import Container from '../Container';
@@ -23,6 +25,9 @@ describe('Container', () => {
     expect(container).toHaveTextContent('section');
   });
 
+  const getStyleContent = (size: ElementSize) =>
+    size === 'xs' ? `max-w-screen-${size}` : `max-w-(--breakpoint-${size})`;
+
   for (const isFixed of [true, false]) {
     for (const size of ELEMENT_SIZES) {
       it('should pass props to the element correctly', () => {
@@ -37,13 +42,15 @@ describe('Container', () => {
           </Container>,
         );
         const container = screen.getByTestId('container');
+        const styleContent = getStyleContent(size);
 
         expect(container).toBeInTheDocument();
         expect(container).toHaveTextContent('props');
-        if (!isFixed) expect(container).toHaveClass(`max-w-screen-${size}`);
+
+        if (!isFixed) expect(container).toHaveClass(styleContent);
         else {
           expect(container).toHaveClass('container');
-          expect(container).toHaveClass(`${size}:!max-w-screen-${size}`);
+          expect(container).toHaveClass(`${size}:${styleContent}!`);
         }
       });
     }
