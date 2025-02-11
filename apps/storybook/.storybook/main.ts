@@ -1,11 +1,6 @@
 import type { StorybookConfig } from '@storybook/nextjs';
-import { dirname, join, resolve } from 'path';
-import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import { dirname, join } from 'path';
 
-/**
- * This function is used to resolve the absolute path of a package.
- * It is needed in projects that use Yarn PnP or are set up within a monorepo.
- */
 const getAbsolutePath = (value: string): string =>
   dirname(require.resolve(join(value, 'package.json')));
 
@@ -36,15 +31,15 @@ const config: StorybookConfig = {
         prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
     },
   },
-  webpackFinal: async config => {
-    config.resolve?.plugins?.push(
-      new TsconfigPathsPlugin({
-        configFile: resolve(__dirname, '../tsconfig.json'),
-      }),
-    );
+  // webpackFinal: async config => {
+  //   config.resolve?.plugins?.push(
+  //     new TsconfigPathsPlugin({
+  //       configFile: resolve(__dirname, '../tsconfig.json'),
+  //     }),
+  //   );
 
-    return config;
-  },
+  //   return config;
+  // },
   // staticDirs: ['..\\public'],
 };
 
