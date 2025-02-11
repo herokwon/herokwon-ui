@@ -38,7 +38,6 @@
     "postcss": "^8",
     "storybook": "^8.5.2",
     "tailwindcss": "^4.0.6",
-    "tsconfig-paths-webpack-plugin": "^4.2.0",
     "typescript": "^5"
   }
 }
