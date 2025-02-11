@@ -13,7 +13,9 @@ import {
   scrollbarY,
 } from './plugins/utils';
 
-const tailwindPlugin = plugin(
+type Plugin = ReturnType<typeof plugin>;
+
+const tailwindPlugin: Plugin = plugin(
   ({ addBase, addVariant, addUtilities, matchVariant, matchUtilities }) => {
     addBase({
       ...baseButton,
