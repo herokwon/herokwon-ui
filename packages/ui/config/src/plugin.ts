@@ -16,7 +16,7 @@ import {
 type Plugin = ReturnType<typeof plugin>;
 
 const tailwindPlugin: Plugin = plugin(
-  ({ addBase, addVariant, addUtilities, matchVariant, matchUtilities }) => {
+  ({ addBase, addVariant, addUtilities, matchUtilities }) => {
     addBase({
       ...baseButton,
       ...baseCode,
@@ -24,10 +24,6 @@ const tailwindPlugin: Plugin = plugin(
       ...baseInput,
       ...baseTable,
     });
-
-    matchVariant('is', value => `&:is(${value})`);
-    matchVariant('not', value => `&:not(${value})`);
-
     Object.entries(customVariants).forEach(([name, definition]) => {
       addVariant(name, definition);
     });
@@ -39,9 +35,6 @@ const tailwindPlugin: Plugin = plugin(
     });
 
     addUtilities({
-      '.max-w-screen-xs': {
-        'max-width': '512px',
-      },
       '.scrollbar-x': scrollbarX,
       '.scrollbar-y': scrollbarY,
       '.hidden-scrollbar': hiddenScrollbar,

@@ -32,13 +32,8 @@ describe('tailwindPlugin', () => {
       ],
       'progress-bar': '&::-webkit-progress-bar',
       'progress-value': '&::-webkit-progress-value',
-      'not-open': '&:not([open])',
-      'not-disabled': '&:not(:disabled)',
-      'not-hover': '&:not(:hover)',
-      'group-not-disabled': '.group:not(:disabled) &',
-      'peer-not-disabled': '.peer:not(:disabled) ~ &',
-      xs: '@media (min-width: 512px)',
-      'max-xs': '@media not all and (min-width: 512px)',
+      xs: '@media (width >= 32rem)',
+      'max-xs': '@media (width < 32rem)',
     });
   });
 
