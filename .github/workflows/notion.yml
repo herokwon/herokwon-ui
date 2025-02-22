@@ -173,7 +173,6 @@ jobs:
 
       - name: Synchronize page properties with Notion
         id: sync
-        if: ${{ !(!env.PAGE_ID && steps.params.outputs.method == 'PATCH') }}
         run: |
           result=$(curl -X ${{ steps.params.outputs.method }} "${{ steps.params.outputs.request_url }}" \
             -H "Authorization: Bearer ${{ secrets.NOTION_API_KEY }}" \
