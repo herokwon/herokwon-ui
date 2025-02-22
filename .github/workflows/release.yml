@@ -184,16 +184,16 @@ jobs:
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "$PUBLISHED_PACKAGES"
+                      text: "'$PUBLISHED_PACKAGES'"
                   - type: "divider"
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Commit*\n<https://github.com/$REPO/commit/$PR_COMMIT|$PR_COMMIT>"
+                      text: "*Commit*\n<https://github.com/'$REPO'/commit/'$PR_COMMIT'|'$PR_COMMIT'>"
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Pull request*\n<https://github.com/$REPO/pull/$PR_NUMBER|[#$PR_NUMBER] $PR_TITLE>"
+                      text: "*Pull request*\n<https://github.com/'$REPO'/pull/'$PR_NUMBER'|[#'$PR_NUMBER'] '$PR_TITLE'>"
                   - type: "actions"
                     elements:
                       - type: "button"
@@ -201,21 +201,21 @@ jobs:
                           type: "plain_text"
                           text: "⭐\t Workflow details"
                           emoji: true
-                        url: "https://github.com/$REPO/actions/runs/$RUN_ID"
+                        url: "https://github.com/'$REPO'/actions/runs/'$RUN_ID'"
                       - type: "button"
                         text:
                           type: "plain_text"
                           text: "📄\t Release note"
                           emoji: true
-                        url: "https://github.com/$REPO/pull/$PR_NUMBER"
+                        url: "https://github.com/'$REPO'/pull/'$PR_NUMBER'"
                   - type: "divider"
                   - type: "context"
                     elements:
                       - type: "image"
-                        image_url: "$AVATAR_URL"
+                        image_url: "'$AVATAR_URL'"
                         alt_text: "avatar_img"
                       - type: "mrkdwn"
-                        text: "<https://github.com/$REPO_OWNER|*$REPO_OWNER*> has approved this message."
+                        text: "<https://github.com/'$REPO_OWNER'|*'$REPO_OWNER'*> has approved this message."
 
       - name: Send message on failure
         if: env.PUBLISHED == 'false' && !env.PUBLISHED_PACKAGES && failure()
@@ -237,11 +237,11 @@ jobs:
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Commit*\n<https://github.com/$REPO/commit/$PR_COMMIT|$PR_COMMIT>"
+                      text: "*Commit*\n<https://github.com/'$REPO'/commit/'$PR_COMMIT'|'$PR_COMMIT'>"
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Pull request*\n<https://github.com/$REPO/pull/$PR_NUMBER|[#$PR_NUMBER] $PR_TITLE>"
+                      text: "*Pull request*\n<https://github.com/'$REPO'/pull/'$PR_NUMBER'|['#$PR_NUMBER'] '$PR_TITLE'>"
                   - type: "actions"
                     elements:
                       - type: "button"
@@ -249,12 +249,12 @@ jobs:
                           type: "plain_text"
                           text: "🔍\t Workflow details"
                           emoji: true
-                        url: "https://github.com/$REPO/actions/runs/$RUN_ID"
+                        url: "https://github.com/'$REPO'/actions/runs/'$RUN_ID'"
                   - type: "divider"
                   - type: "context"
                     elements:
                       - type: "image"
-                        image_url: "$AVATAR_URL"
+                        image_url: "'$AVATAR_URL'"
                         alt_text: "avatar_img"
                       - type: "mrkdwn"
-                        text: "<https://github.com/$REPO_OWNER|*$REPO_OWNER*> has approved this message."
+                        text: "<https://github.com/'$REPO_OWNER'|*'$REPO_OWNER'*> has approved this message."
