@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import '@herokwon/ui/dist/index.css';
 
 @config '../../../packages/tailwind-config/tailwind.config.ts';
 
