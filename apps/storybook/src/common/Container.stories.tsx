@@ -1,4 +1,8 @@
-import { Container, ELEMENT_SPACINGS } from '@herokwon/ui/common';
+import {
+  Container,
+  ELEMENT_SIZES,
+  ELEMENT_SPACINGS,
+} from '@herokwon/ui/common';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
@@ -14,6 +18,10 @@ const meta = {
     children: 'Try resize!',
   },
   argTypes: {
+    maxWidth: {
+      control: 'select',
+      options: ELEMENT_SIZES,
+    },
     padding: {
       control: 'select',
       options: ELEMENT_SPACINGS,
@@ -52,17 +60,23 @@ const ContainerRender = ({
 
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
-  }, []);
+  }, [props.fixed, props.maxWidth, props.padding]);
 
   return (
-    <div className="h-[calc(100vh-2rem)] w-[calc(100vw-2rem)] border">
+    <div className="-m-4 h-screen w-screen">
       <Container
         {...props}
         id="container"
-        className={`bg-primary-light dark:bg-primary-dark flex size-full flex-col items-center justify-center text-xl font-bold ${props.className ?? ''}`}
+        className={`bg-primary-light dark:bg-primary-dark flex h-full flex-col items-center justify-center text-xl font-bold ${props.className ?? ''}`}
       >
-        {children}
-        <p className="mt-4 whitespace-pre-wrap text-center text-base font-normal">{`width: ${containerSize.width}px\nheight: ${containerSize.height}px`}</p>
+        <div
+          className={`${
+            !props.padding ? '' : 'bg-default-light dark:bg-default-dark'
+          } flex size-full flex-col items-center justify-center`}
+        >
+          {children}
+          <p className="mt-4 text-center text-base font-normal whitespace-pre-wrap">{`${containerSize.width}px * ${containerSize.height}px`}</p>
+        </div>
       </Container>
     </div>
   );
