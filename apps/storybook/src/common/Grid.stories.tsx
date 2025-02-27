@@ -18,19 +18,21 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const GridRender = ({ ...props }: Parameters<typeof Grid>[0]) => (
-  <Container className="flex h-[calc(100vh-2rem)] w-[calc(100vw-2rem)] items-center justify-center">
-    <Grid
-      {...props}
-      className={`bg-secondary-light dark:bg-secondary-dark max-h-full max-w-full overflow-y-auto p-4 shadow-md ${props.className ?? ''}`}
-    >
-      {Array.from({ length: 4 }, (_, i) => (
-        <Grid.Item
-          key={crypto.randomUUID()}
-          className="bg-primary-light dark:bg-primary-dark flex items-center justify-center whitespace-nowrap px-8 py-4 font-bold"
-        >{`Grid Item ${i + 1}`}</Grid.Item>
-      ))}
-    </Grid>
-  </Container>
+  <div className="-m-4 h-screen w-screen">
+    <Container className="-m-4 flex size-full items-center justify-center">
+      <Grid
+        {...props}
+        className={`bg-secondary-light dark:bg-secondary-dark max-h-full max-w-full overflow-y-auto p-4 shadow-md ${props.className ?? ''}`}
+      >
+        {Array.from({ length: 4 }, (_, i) => (
+          <Grid.Item
+            key={crypto.randomUUID()}
+            className="bg-primary-light dark:bg-primary-dark flex items-center justify-center px-8 py-4 font-bold whitespace-nowrap"
+          >{`Grid Item ${i + 1}`}</Grid.Item>
+        ))}
+      </Grid>
+    </Container>
+  </div>
 );
 
 export const Default: Story = {
