@@ -7,6 +7,7 @@ import { baseInput } from './plugins/input';
 import { baseTable } from './plugins/table';
 import {
   bgUnderline,
+  container,
   customVariants,
   hiddenScrollbar,
   scrollbarX,
@@ -35,6 +36,7 @@ const tailwindPlugin: Plugin = plugin(
     });
 
     addUtilities({
+      '.container': container,
       '.scrollbar-x': scrollbarX,
       '.scrollbar-y': scrollbarY,
       '.hidden-scrollbar': hiddenScrollbar,

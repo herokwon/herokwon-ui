@@ -17,6 +17,25 @@ export const customVariants: { [key: string]: string | string[] } = {
   'progress-value': '&::-webkit-progress-value',
 };
 
+export const container = {
+  width: '100%',
+  '@media (width >= 32rem)': {
+    maxWidth: 'var(--container-lg)',
+  },
+  '@media (width >= 48rem)': {
+    maxWidth: 'var(--breakpoint-md)',
+  },
+  '@media (width >= 64rem)': {
+    maxWidth: 'var(--breakpoint-lg)',
+  },
+  '@media (width >= 80rem)': {
+    maxWidth: 'var(--breakpoint-xl)',
+  },
+  '@media (width >= 96rem)': {
+    maxWidth: 'var(--breakpoint-2xl)',
+  },
+};
+
 export const scrollbarX = {
   'overflow-x': 'auto',
   '&::-webkit-scrollbar': {
