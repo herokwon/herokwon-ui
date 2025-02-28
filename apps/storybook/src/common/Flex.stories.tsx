@@ -6,6 +6,7 @@ const meta = {
   tags: ['autodocs'],
   component: Flex,
   args: {
+    as: 'div',
     gap: 4,
     flexDirection: 'row',
     flexWrap: 'nowrap',

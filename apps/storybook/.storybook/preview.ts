@@ -1,3 +1,8 @@
+import {
+  ELEMENT_SIZES,
+  ELEMENT_SPACINGS,
+  ELEMENT_TYPES,
+} from '@herokwon/ui/common';
 import { withThemeByClassName } from '@storybook/addon-themes';
 import type { Preview } from '@storybook/react';
 
@@ -18,6 +23,32 @@ const preview: Preview = {
     },
     nextjs: {
       appDirectory: true,
+    },
+  },
+  argTypes: {
+    as: {
+      control: 'select',
+      options: ELEMENT_TYPES,
+      if: {
+        arg: 'as',
+        exists: true,
+      },
+    },
+    size: {
+      control: 'select',
+      options: ELEMENT_SIZES,
+      if: {
+        arg: 'size',
+        exists: true,
+      },
+    },
+    padding: {
+      control: 'select',
+      options: ELEMENT_SPACINGS,
+      if: {
+        arg: 'padding',
+        exists: true,
+      },
     },
   },
   decorators: [

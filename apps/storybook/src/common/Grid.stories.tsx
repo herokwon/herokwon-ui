@@ -41,6 +41,7 @@ export const Default: Story = {
 
 export const Gap: Story = {
   args: {
+    as: 'div',
     gap: {
       row: 8,
     },

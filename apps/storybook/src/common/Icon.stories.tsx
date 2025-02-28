@@ -1,4 +1,4 @@
-import { ELEMENT_SIZES, Icon } from '@herokwon/ui/common';
+import { Icon } from '@herokwon/ui/common';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FaCheck } from 'react-icons/fa6';
 
@@ -8,12 +8,6 @@ const meta = {
   component: Icon,
   args: {
     size: 'md',
-  },
-  argTypes: {
-    size: {
-      control: 'select',
-      options: ELEMENT_SIZES,
-    },
   },
 } satisfies Meta<typeof Icon>;
 export default meta;

@@ -1,8 +1,4 @@
-import {
-  Container,
-  ELEMENT_SIZES,
-  ELEMENT_SPACINGS,
-} from '@herokwon/ui/common';
+import { Container, ELEMENT_SIZES } from '@herokwon/ui/common';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
@@ -21,10 +17,6 @@ const meta = {
     maxWidth: {
       control: 'select',
       options: ELEMENT_SIZES,
-    },
-    padding: {
-      control: 'select',
-      options: ELEMENT_SPACINGS,
     },
   },
 } satisfies Meta<typeof Container>;
