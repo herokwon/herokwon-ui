@@ -150,7 +150,7 @@ jobs:
   send_slack_message:
     needs: run-changesets
     name: Send slack message
-    if: needs.run-changesets.outputs.published == 'true' || needs.run-changesets.outputs.published_packages != '' || failure()
+    if: needs.run-changesets.outputs.published == 'true' || needs.run-changesets.outputs.published_packages || failure()
     runs-on: ubuntu-latest
     env:
       REPO: ${{ github.repository }}
@@ -166,7 +166,7 @@ jobs:
       AVATAR_URL: ${{ fromJSON(needs.run-changesets.outputs.pr).avatar_url }}
     steps:
       - name: Send message on success
-        if: env.PUBLISHED == 'true' && env.PUBLISHED_PACKAGES && success()
+        if: success()
         uses: slackapi/slack-github-action@v2
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -218,7 +218,7 @@ jobs:
                         text: "<https://github.com/'$REPO_OWNER'|*'$REPO_OWNER'*> has approved this message."
 
       - name: Send message on failure
-        if: env.PUBLISHED == 'false' && !env.PUBLISHED_PACKAGES && failure()
+        if: failure()
         uses: slackapi/slack-github-action@v2
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
