@@ -150,23 +150,11 @@ jobs:
   send_slack_message:
     needs: run-changesets
     name: Send slack message
-    if: needs.run-changesets.outputs.published == 'true' || needs.run-changesets.outputs.published_packages != '' || failure()
+    if: needs.run-changesets.outputs.published == 'true' || needs.run-changesets.outputs.published_packages || failure()
     runs-on: ubuntu-latest
-    env:
-      REPO: ${{ github.repository }}
-      REPO_OWNER: ${{ github.repository_owner }}
-      RUN_ID: ${{ github.run_id }}
-      PUBLISHED: ${{ needs.run-changesets.outputs.published }}
-      PUBLISHED_PACKAGES: ${{ needs.run-changesets.outputs.published_packages }}
-      PR_HEAD_REF: ${{ fromJSON(needs.run-changesets.outputs.pr).head_ref }}
-      PR_COMMIT: ${{ fromJSON(needs.run-changesets.outputs.pr).commit }}
-      PR_NUMBER: ${{ fromJSON(needs.run-changesets.outputs.pr).number }}
-      PR_TITLE: ${{ fromJSON(needs.run-changesets.outputs.pr).title }}
-      PR_URL: ${{ fromJSON(needs.run-changesets.outputs.pr).url }}
-      AVATAR_URL: ${{ fromJSON(needs.run-changesets.outputs.pr).avatar_url }}
     steps:
       - name: Send message on success
-        if: env.PUBLISHED == 'true' && env.PUBLISHED_PACKAGES && success()
+        if: success()
         uses: slackapi/slack-github-action@v2
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -184,16 +172,16 @@ jobs:
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "'$PUBLISHED_PACKAGES'"
+                      text: "${{ needs.run-changesets.outputs.published_packages }}"
                   - type: "divider"
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Commit*\n<https://github.com/'$REPO'/commit/'$PR_COMMIT'|'$PR_COMMIT'>"
+                      text: "*Commit*\n<https://github.com/${{ github.repository }}/commit/${{ fromJSON(needs.run-changesets.outputs.pr).commit }}|${{ fromJSON(needs.run-changesets.outputs.pr).commit }}>"
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Pull request*\n<https://github.com/'$REPO'/pull/'$PR_NUMBER'|[#'$PR_NUMBER'] '$PR_TITLE'>"
+                      text: "*Pull request*\n<${{ fromJSON(needs.run-changesets.outputs.pr).url }}|[#${{ fromJSON(needs.run-changesets.outputs.pr).number }}] ${{ fromJSON(needs.run-changesets.outputs.pr).title }}>"
                   - type: "actions"
                     elements:
                       - type: "button"
@@ -201,24 +189,24 @@ jobs:
                           type: "plain_text"
                           text: "⭐\t Workflow details"
                           emoji: true
-                        url: "https://github.com/'$REPO'/actions/runs/'$RUN_ID'"
+                        url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                       - type: "button"
                         text:
                           type: "plain_text"
                           text: "📄\t Release note"
                           emoji: true
-                        url: "https://github.com/'$REPO'/pull/'$PR_NUMBER'"
+                        url: "${{ fromJSON(needs.run-changesets.outputs.pr).url }}"
                   - type: "divider"
                   - type: "context"
                     elements:
                       - type: "image"
-                        image_url: "'$AVATAR_URL'"
+                        image_url: "${{ fromJSON(needs.run-changesets.outputs.pr).avatar_url }}"
                         alt_text: "avatar_img"
                       - type: "mrkdwn"
-                        text: "<https://github.com/'$REPO_OWNER'|*'$REPO_OWNER'*> has approved this message."
+                        text: "<https://github.com/${{ github.repository_owner }}|*${{ github.repository_owner }}*> has approved this message."
 
       - name: Send message on failure
-        if: env.PUBLISHED == 'false' && !env.PUBLISHED_PACKAGES && failure()
+        if: failure()
         uses: slackapi/slack-github-action@v2
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -237,11 +225,11 @@ jobs:
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Commit*\n<https://github.com/'$REPO'/commit/'$PR_COMMIT'|'$PR_COMMIT'>"
+                      text: "*Commit*\n<https://github.com/${{ github.repository }}/commit/${{ fromJSON(needs.run-changesets.outputs.pr).commit }}|${{ fromJSON(needs.run-changesets.outputs.pr).commit }}>"
                   - type: "section"
                     text:
                       type: "mrkdwn"
-                      text: "*Pull request*\n<https://github.com/'$REPO'/pull/'$PR_NUMBER'|['#$PR_NUMBER'] '$PR_TITLE'>"
+                      text: "*Pull request*\n<${{ fromJSON(needs.run-changesets.outputs.pr).url }}|[#${{ fromJSON(needs.run-changesets.outputs.pr).number }}] ${{ fromJSON(needs.run-changesets.outputs.pr).title }}>"
                   - type: "actions"
                     elements:
                       - type: "button"
@@ -249,12 +237,12 @@ jobs:
                           type: "plain_text"
                           text: "🔍\t Workflow details"
                           emoji: true
-                        url: "https://github.com/'$REPO'/actions/runs/'$RUN_ID'"
+                        url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                   - type: "divider"
                   - type: "context"
                     elements:
                       - type: "image"
-                        image_url: "'$AVATAR_URL'"
+                        image_url: "${{ fromJSON(needs.run-changesets.outputs.pr).avatar_url }}"
                         alt_text: "avatar_img"
                       - type: "mrkdwn"
-                        text: "<https://github.com/'$REPO_OWNER'|*'$REPO_OWNER'*> has approved this message."
+                        text: "<https://github.com/${{ github.repository_owner }}|*${{ github.repository_owner }}*> has approved this message."
