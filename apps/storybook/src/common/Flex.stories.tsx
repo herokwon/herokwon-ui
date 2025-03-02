@@ -6,6 +6,7 @@ const meta = {
   tags: ['autodocs'],
   component: Flex,
   args: {
+    as: 'div',
     gap: 4,
     flexDirection: 'row',
     flexWrap: 'nowrap',
@@ -49,7 +50,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const FlexRender = ({ ...props }: Parameters<typeof Flex>[0]) => (
-  <Container className="flex h-[calc(100vh-2rem)] w-[calc(100vw-2rem)] items-center justify-center">
+  <Container className="-m-4 flex h-screen w-screen items-center justify-center">
     <Flex
       {...props}
       className={`bg-secondary-light dark:bg-secondary-dark max-h-full max-w-full p-4 shadow-md ${props.className ?? ''}`}
@@ -57,7 +58,7 @@ const FlexRender = ({ ...props }: Parameters<typeof Flex>[0]) => (
       {Array.from({ length: 3 }, (_, i) => (
         <Flex.Item
           key={crypto.randomUUID()}
-          className="bg-primary-light dark:bg-primary-dark whitespace-nowrap px-8 py-4 font-bold"
+          className="bg-primary-light dark:bg-primary-dark px-8 py-4 font-bold whitespace-nowrap"
         >{`Flex Item ${i + 1}`}</Flex.Item>
       ))}
     </Flex>
@@ -78,7 +79,7 @@ export const ColumnDirection: Story = {
 export const Wrap: Story = {
   args: {
     flexWrap: 'wrap',
-    className: 'w-400',
+    className: 'w-100',
   },
   render: ({ ...props }) => <FlexRender {...props} />,
 };

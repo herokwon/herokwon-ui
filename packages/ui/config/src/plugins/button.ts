@@ -6,4 +6,7 @@ export const baseButton = {
   'button:disabled > *': {
     pointerEvents: 'none',
   },
+  button: {
+    cursor: 'pointer',
+  },
 };

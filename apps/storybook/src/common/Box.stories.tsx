@@ -1,5 +1,6 @@
 import { Box } from '@herokwon/ui/common';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 
 const meta = {
   title: 'Common/Box',
@@ -7,7 +8,7 @@ const meta = {
   component: Box,
   args: {
     as: 'div',
-    className: 'w-100 aspect-square block',
+    className: 'w-50 aspect-square block',
   },
 } satisfies Meta<typeof Box>;
 export default meta;
@@ -15,10 +16,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const BoxRender = ({ ...props }: Parameters<typeof Box>[0]) => (
-  <Box {...props} />
+  <>
+    <Box {...props} />
+    <p className="text-center">{`<${props.as || 'div'} />`}</p>
+  </>
 );
 
-export const BorderDefault: Story = {
+export const Default: Story = {
   render: ({ ...props }) => (
     <BoxRender
       {...props}
@@ -27,21 +31,25 @@ export const BorderDefault: Story = {
   ),
 };
 
-export const RedButton: Story = {
+export const Button: Story = {
   args: {
     as: 'button',
+    onClick: fn(),
   },
   render: ({ ...props }) => (
     <BoxRender
       {...props}
-      className={`bg-red-light dark:bg-red-dark ${props.className ?? ''}`}
+      className={`bg-red-light aspect-square ${props.className ?? ''}`}
     />
   ),
 };
 
-export const BlueAnchor: Story = {
+export const Anchor: Story = {
   args: {
     as: 'a',
+    onClick: fn(),
+    href: 'https://github.com/herokwon',
+    target: '_blank',
   },
   render: ({ ...props }) => (
     <BoxRender
@@ -51,7 +59,7 @@ export const BlueAnchor: Story = {
   ),
 };
 
-export const YellowSpan: Story = {
+export const Span: Story = {
   args: {
     as: 'span',
   },

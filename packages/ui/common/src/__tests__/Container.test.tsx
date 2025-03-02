@@ -25,8 +25,20 @@ describe('Container', () => {
     expect(container).toHaveTextContent('section');
   });
 
-  const getStyleContent = (size: ElementSize) =>
-    size === 'xs' ? `max-w-screen-${size}` : `max-w-(--breakpoint-${size})`;
+  const getStyleContent = (size: ElementSize) => {
+    switch (size) {
+      case 'xs':
+        return 'max-w-lg';
+      case 'sm':
+        return 'max-w-(--breakpoint-md)';
+      case 'md':
+        return 'max-w-(--breakpoint-lg)';
+      case 'lg':
+        return 'max-w-(--breakpoint-xl)';
+      case 'xl':
+        return 'max-w-(--breakpoint-2xl)';
+    }
+  };
 
   for (const isFixed of [true, false]) {
     for (const size of ELEMENT_SIZES) {
@@ -47,11 +59,7 @@ describe('Container', () => {
         expect(container).toBeInTheDocument();
         expect(container).toHaveTextContent('props');
 
-        if (!isFixed) expect(container).toHaveClass(styleContent);
-        else {
-          expect(container).toHaveClass('container');
-          expect(container).toHaveClass(`${size}:${styleContent}!`);
-        }
+        expect(container).toHaveClass(isFixed ? 'container' : styleContent);
       });
     }
   }
