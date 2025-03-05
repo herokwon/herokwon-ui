@@ -6,6 +6,7 @@
     "next-dev": "next dev",
     "dev": "storybook dev -p 6006",
     "build": "storybook build --stats-json",
+    "build-storybook": "npm run build",
     "start": "next start",
     "lint": "next lint",
     "check-types": "tsc --noEmit"
