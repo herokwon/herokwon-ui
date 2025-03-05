@@ -39,6 +39,10 @@ jobs:
         uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          zip: true
+          onlyChanged: true
+          autoAcceptChanges: 'main'
+          skip: 'dependabot/**'
 
       - name: Check a latest pull request
         id: pr
