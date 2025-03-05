@@ -12,10 +12,6 @@
         "storybook-static/**"
       ]
     },
-    "build-storybook": {
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["storybook-static/**"]
-    },
     "lint": {
       "dependsOn": ["^lint"]
     },
