@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "build-storybook": "npm run build -w apps/storybook",
+    "build-storybook": "turbo build-storybook",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "check-types": "turbo check-types",
