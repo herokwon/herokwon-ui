@@ -5,7 +5,7 @@
   "scripts": {
     "next-dev": "next dev",
     "dev": "storybook dev -p 6006",
-    "build": "storybook build --stats-json",
+    "build": "storybook build -o storybook-static --stats-json",
     "build-storybook": "npm run build",
     "start": "next start",
     "lint": "next lint",

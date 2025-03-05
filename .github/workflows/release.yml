@@ -43,6 +43,8 @@ jobs:
           onlyChanged: true
           autoAcceptChanges: 'main'
           skip: 'dependabot/**'
+          storybookBaseDir: apps/storybook
+          storybookBuildDir: apps/storybook/storybook-static
 
       - name: Check a latest pull request
         id: pr
