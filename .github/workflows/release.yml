@@ -64,7 +64,7 @@ jobs:
             github.rest.issues.createComment({
               issue_number: ${{steps.pr.outputs.result }},
               owner: context.repo.owner,
-              repo: content.repo.repo,
+              repo: context.repo.repo,
               body: ':rocket: storybook: ${{ steps.chromatic.outputs.storybookUrl }}'
             });
 
