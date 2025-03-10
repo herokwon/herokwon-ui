@@ -1,0 +1,66 @@
+@theme {
+  /* --------------------------------
+     (common) colors
+     -------------------------------- */
+  --color-brown-50: #fdf8f6;
+  --color-brown-100: #f2e8e5;
+  --color-brown-200: #eaddd7;
+  --color-brown-300: #e0cec7;
+  --color-brown-400: #d2bab0;
+  --color-brown-500: #bfa094;
+  --color-brown-600: #a18072;
+  --color-brown-700: #977669;
+  --color-brown-800: #846358;
+  --color-brown-900: #43302b;
+
+  --color-blue-light: #3b82f6;
+  --color-blue-dark: #2563eb;
+
+  --color-red-light: #ef4444;
+  --color-red-dark: #dc2626;
+
+  --color-green-light: #22c55e;
+  --color-green-dark: #16a34a;
+
+  --color-yellow-light: #facc15;
+  --color-yellow-dark: #eab308;
+
+  --color-primary-light: #4a90e2;
+  --color-primary-dark: #3a78c2;
+  --color-secondary-light: #e2e8f0;
+  --color-secondary-dark: #1e293b;
+  --color-tertiary-light: #cbd5e1;
+  --color-tertiary-dark: #334155;
+
+  /* --------------------------------
+     (foreground & background) colors
+     -------------------------------- */
+  --color-foreground-light: #000000;
+  --color-foreground-dark: #ffffff;
+  --color-background-light: #ffffff;
+  --color-background-dark: #121212;
+
+  --color-success-foreground-light: #166534;
+  --color-success-foreground-dark: #bbf7d0;
+  --color-success-background-light: #dcfce7;
+  --color-success-background-dark: #052e16;
+
+  --color-error-foreground-light: #991b1b;
+  --color-error-foreground-dark: #fecaca;
+  --color-error-background-light: #fee2e2;
+  --color-error-background-dark: #450a0a;
+
+  --color-warning-foreground-light: #854d0e;
+  --color-warning-foreground-dark: #fef08a;
+  --color-warning-background-light: #fef9c3;
+  --color-warning-background-dark: #422006;
+
+  --color-info-foreground-light: #1e40af;
+  --color-info-foreground-dark: #bfdbfe;
+  --color-info-background-light: #dbeafe;
+  --color-info-background-dark: #172554;
+
+  --opacity-bold: 87%;
+  --opacity-normal: 60%;
+  --opacity-off: 38%;
+}
