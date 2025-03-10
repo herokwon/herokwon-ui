@@ -1,3 +1,23 @@
 @import 'tailwindcss';
 
-@config '../../tailwind-config/tailwind.config.ts';
+@layer theme;
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@import '@repo/tailwind-config/theme.css' layer(theme);
+
+@utility success {
+  @apply text-success-foreground-light dark:text-success-foreground-dark bg-success-background-light dark:bg-success-background-dark;
+}
+
+@utility error {
+  @apply text-error-foreground-light dark:text-error-foreground-dark bg-error-foreground-light dark:bg-error-background-dark;
+}
+
+@utility warning {
+  @apply text-warning-foreground-light dark:text-warning-foreground-dark bg-warning-background-light dark:bg-warning-background-dark;
+}
+
+@utility info {
+  @apply text-info-foreground-light dark:text-info-foreground-dark bg-info-background-light dark:bg-info-background-dark;
+}
