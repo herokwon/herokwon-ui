@@ -7,6 +7,7 @@
     "check-types": "tsc --noEmit"
   },
   "exports": {
+    "./base.css": "./base.css",
     "./theme.css": "./theme.css",
     "./postcss": "./postcss.config.mjs"
   },
