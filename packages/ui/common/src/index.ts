@@ -1,4 +1,4 @@
-import './index.css';
+import '../../src/index.css';
 
 export * from './constants';
 export * from './types';
