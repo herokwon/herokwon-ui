@@ -1,0 +1,116 @@
+@layer base {
+  /* --------------------------------
+     button
+     -------------------------------- */
+  button:disabled {
+    @apply opacity-off cursor-pointer *:pointer-events-none;
+  }
+
+  /* --------------------------------
+     code & pre
+     -------------------------------- */
+  pre[class*='language-'],
+  code[class*='language-'] {
+    @apply font-code bg-none text-left text-base leading-normal break-normal hyphens-none whitespace-pre text-[#f8f8f2] [tab-size:4] [word-spacing:normal] [word-wrap:normal];
+    text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+
+    :is(pre) {
+      @apply m-0 p-0;
+    }
+
+    :is(code) {
+      @apply bg-secondary-dark box-content w-full px-4 py-2;
+    }
+  }
+
+  /* --------------------------------
+     heading
+     -------------------------------- */
+  h1 {
+    @apply text-[1.6rem] font-extrabold;
+  }
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+
+    :is(h2) {
+      @apply text-[1.48rem];
+    }
+
+    :is(h3) {
+      @apply text-[1.36rem];
+    }
+
+    :is(h4) {
+      @apply text-[1.24rem];
+    }
+
+    :is(h5) {
+      @apply text-[1.12rem];
+    }
+
+    :is(h6) {
+      @apply text-base;
+    }
+  }
+
+  /* --------------------------------
+     input
+     -------------------------------- */
+  input {
+    @apply bg-transparent;
+
+    :where(:autofill, :autofill:hover, :autofill:focus, :autofill:active) {
+      @apply shadow-[0_0_0_1000px_white_inset] dark:shadow-[0_0_0_1000px_#121212_inset];
+    }
+
+    :where(
+      :-webkit-autofill,
+      :-webkit-autofill:hover,
+      :-webkit-autofill:focus,
+      :-webkit-autofill:active
+    ) {
+      -webkit-box-shadow: 0 0 0 1000px white inset;
+      -webkit-text-fill-color: black;
+
+      .dark & {
+        -webkit-box-shadow: 0 0 0 1000px #121212 inset;
+        -webkit-text-fill-color: white;
+      }
+    }
+
+    &[type='range'] {
+      @apply h-1 w-full cursor-pointer appearance-none rounded-full outline-2 outline-offset-2 outline-transparent outline-solid;
+
+      &::-webkit-slider-runnable-track,
+      &::-moz-range-track {
+        @apply -mx-1.5;
+      }
+
+      &::-webkit-slider-thumb,
+      &::-moz-range-thumb {
+        @apply aspect-square w-3 appearance-none rounded-full;
+      }
+    }
+  }
+
+  /* --------------------------------
+     table
+     -------------------------------- */
+  table {
+    @apply w-full border-collapse;
+
+    th,
+    td {
+      @apply border-secondary-light dark:border-secondary-dark border-b-2 px-4 py-2;
+
+      :is(th) {
+        @apply bg-secondary-light dark:bg-secondary-dark;
+      }
+    }
+  }
+}

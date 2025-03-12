@@ -1,11 +1,8 @@
-@import 'tailwindcss';
-@import '@herokwon/ui/dist/index.css';
-
-@config '../../../packages/tailwind-config/tailwind.config.ts';
+@import '../../../packages/ui/src/index.css';
 
 @layer base {
   body {
-    @apply text-default-light dark:text-default-dark bg-default-light dark:bg-default-dark;
+    @apply text-foreground-light dark:text-foreground-dark bg-background-light dark:bg-background-dark;
 
     @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/variable/pretendardvariable.min.css');
     font-family:

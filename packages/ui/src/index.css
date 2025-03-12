@@ -1,3 +1,76 @@
 @import 'tailwindcss';
 
-@config '../../tailwind-config/tailwind.config.ts';
+@layer theme, base;
+
+@import '@repo/tailwind-config/theme.css' layer(theme);
+@import '@repo/tailwind-config/base.css' layer(base);
+
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant scrollbar (&::-webkit-scrollbar);
+@custom-variant scrollbar-thumb (&::-webkit-scrollbar-thumb);
+@custom-variant scrollbar-track (&::-webkit-scrollbar-track);
+@custom-variant slider-thumb (&::-webkit-slider-thumb, &::-moz-range-thumb);
+@custom-variant slider-track (&::-webkit-slider-runnable-track, &::-moz-range-track);
+@custom-variant progress-bar (&::-webkit-progress-bar);
+@custom-variant progress-value (&::-webkit-progress-value);
+
+@utility container {
+  @media (width >= 32rem) {
+    max-width: var(--breakpoint-sm);
+  }
+  @media (width >= 48rem) {
+    max-width: var(--breakpoint-md);
+  }
+  @media (width >= 64rem) {
+    max-width: var(--breakpoint-lg);
+  }
+  @media (width >= 80rem) {
+    max-width: var(--breakpoint-xl);
+  }
+  @media (width >= 96rem) {
+    max-width: var(--breakpoint-2xl);
+  }
+}
+
+@utility success {
+  @apply text-success-foreground-light dark:text-success-foreground-dark bg-success-background-light dark:bg-success-background-dark;
+}
+
+@utility error {
+  @apply text-error-foreground-light dark:text-error-foreground-dark bg-error-foreground-light dark:bg-error-background-dark;
+}
+
+@utility warning {
+  @apply text-warning-foreground-light dark:text-warning-foreground-dark bg-warning-background-light dark:bg-warning-background-dark;
+}
+
+@utility info {
+  @apply text-info-foreground-light dark:text-info-foreground-dark bg-info-background-light dark:bg-info-background-dark;
+}
+
+@utility bg-underline-full {
+  @apply bg-linear-to-r bg-[length:0%_100%] bg-[position:0_100%] bg-no-repeat hover:bg-[length:100%_100%];
+
+  &.active {
+    @apply bg-[length:100%_100%];
+  }
+}
+
+@utility bg-underline-* {
+  @apply bg-linear-to-r bg-[position:0_100%] bg-no-repeat;
+
+  background-size: 0% --spacing(--value(integer));
+  background-size: 0% calc(--value(--bg-underline-size- *, ratio) * 100%);
+
+  &:hover,
+  &.active {
+    background-size: 100% --spacing(--value(integer));
+    background-size: 100% calc(--value(--bg-underline-size- *, ratio) * 100%);
+  }
+}
+
+@utiliity scrollbar-hidden {
+  &::-webkit-scrollbar {
+    @apply hidden;
+  }
+}
