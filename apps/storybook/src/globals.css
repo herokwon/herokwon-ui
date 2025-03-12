@@ -1,7 +1,4 @@
-@import 'tailwindcss';
-@import '@herokwon/ui/dist/index.css';
-
-@config '../../../packages/tailwind-config/tailwind.config.ts';
+@import '../../../packages/ui/src/index.css';
 
 @layer base {
   body {
