@@ -1,5 +1,14 @@
 # @herokwon/ui
 
+## 0.2.1
+
+### Patch Changes
+
+- 35c1bc2: Update content 👇
+
+  - [x] **`theme.css`** 빌드 작업 추가 설정
+  - [x] postcss 환경설정 불필요 타입 선언 제거
+
 ## 0.2.0
 
 ### Minor Changes
