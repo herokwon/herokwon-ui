@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   plugins: [react()],
   test: {
-    setupFiles: './vitest-setup',
+    setupFiles: './vitest.setup',
     coverage: {
       provider: 'v8',
     },
