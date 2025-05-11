@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@changesets/changelog-git": "^0.2.1",
-    "@changesets/cli": "^2.29.2"
+    "@changesets/cli": "^2.29.3"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
